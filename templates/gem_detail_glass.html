@@ -7,7 +7,6 @@
 {% block extra_css %}
 <link rel="stylesheet" href="{{ url_for('static', filename='css/glassmorphism-detail.css') }}">
 <style>
-    /* Скрываем стандартные элементы страницы */
     .site-header, .site-footer, .breadcrumbs-nav { display: none !important; }
     .container { max-width: none !important; padding: 0 !important; }
     body { background: none !important; }
@@ -17,37 +16,26 @@
 {% block title %}{{ gem.name }} — Энциклопедия камней{% endblock %}
 
 {% block content %}
-<!-- Фон страницы с изображением минерала -->
 <div class="gem-detail-page" style="background-image: url('{% if gem.image_filename %}{{ url_for('uploaded_file', filename=gem.image_filename) }}{% else %}{{ url_for('static', filename='img/placeholder.jpg') }}{% endif %}');">
     
-    <!-- Кнопка закрытия -->
     <a href="{{ url_for('catalog', category=gem.category|category_plural) }}" class="gem-close-btn" title="Закрыть">×</a>
     
-    <!-- Glassmorphism карточка -->
     <div class="gem-glass-card">
-        <!-- Левая часть - изображение -->
         <div class="gem-glass-image">
             <img src="{% if gem.image_filename %}{{ url_for('uploaded_file', filename=gem.image_filename) }}{% else %}{{ url_for('static', filename='img/placeholder.jpg') }}{% endif %}" alt="{{ gem.name }}">
         </div>
         
-        <!-- Правая часть - контент -->
         <div class="gem-glass-content">
-            <!-- Заголовок -->
             <h1 class="gem-glass-title">{{ gem.name }}</h1>
             
-            <!-- Категория -->
-            <span class="gem-glass-category">
-                {{ gem.category|category_plural }}
-            </span>
+            <span class="gem-glass-category">{{ gem.category|category_plural }}</span>
             
-            <!-- Описание -->
             {% if gem.description %}
             <div class="gem-glass-description">
-                {{ gem.description[:400]|nl2br }}{% if gem.description|length > 400 %}…{% endif %}
+                {{ gem.description[:250]|nl2br }}{% if gem.description|length > 250 %}…{% endif %}
             </div>
             {% endif %}
             
-            <!-- Характеристики -->
             {% if gem.properties %}
             <div class="gem-glass-specs">
                 <div class="gem-glass-specs-title">Характеристики</div>
