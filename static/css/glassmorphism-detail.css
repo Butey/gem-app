@@ -260,3 +260,89 @@
         font-size: 1.1rem;
     }
 }
+
+/* === Шкала Мооса === */
+.mohs-item {
+    grid-column: 1 / -1;
+}
+
+.mohs-bar-container {
+    position: relative;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.mohs-number {
+    font-size: 0.65rem;
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 500;
+    min-width: 16px;
+}
+
+.mohs-number-left {
+    text-align: left;
+}
+
+.mohs-number-right {
+    text-align: right;
+}
+
+.mohs-bar {
+    flex: 1;
+    height: 6px;
+    background: linear-gradient(90deg, 
+        #F5F5F5 0%, 
+        #B0E0E6 11%, 
+        #48D1CC 22%, 
+        #90EE90 33%, 
+        #C4D300 44%, 
+        #FFD700 56%, 
+        #FF8C00 67%, 
+        #FF4500 78%, 
+        #800020 89%, 
+        #121212 100%
+    );
+    border-radius: 3px;
+    position: relative;
+}
+
+.mohs-badge {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+}
+
+/* === Цвета === */
+.colors-item {
+    grid-column: 1 / -1;
+}
+
+.color-swatch-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.color-swatch {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    cursor: pointer;
+    transition: transform 0.2s ease, border-color 0.2s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.color-swatch:hover {
+    transform: scale(1.15);
+    border-color: rgba(255, 255, 255, 0.6);
+}
