@@ -452,6 +452,10 @@ def search_suggest():
 @app.route('/gem/<slug>')
 def gem_detail(slug):
     gem = Gem.query.filter_by(slug=slug).first_or_404()
+    # Поддержка параметра style для выбора дизайна
+    style = request.args.get('style', 'default')
+    if style == 'glass':
+        return render_template('gem_detail_glass.html', gem=gem)
     return render_template('gem_detail.html', gem=gem)
 
 # === Отладка поиска (обновлено: только заголовок и описание) ===
