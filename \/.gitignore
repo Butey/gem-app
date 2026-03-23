@@ -1,0 +1,44 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+*.egg-info/
+dist/
+build/
+
+# База данных
+*.db
+*.db-journal
+
+# Логи
+logs/
+*.log
+
+# Бэкапы
+backups/
+
+# Загрузки
+uploads/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# PID
+*.pid
+
+# Environment
+.env
+.flaskenv

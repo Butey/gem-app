@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Вход в админ-панель{% endblock %}
+{% block content %}
+<div class="admin-login">
+    <h2>Авторизация</h2>
+    <form method="post">
+        <label>Логин:<br><input type="text" name="username" required></label>
+        <label>Пароль:<br><input type="password" name="password" required></label>
+        <button type="submit">Войти</button>
+    </form>
+</div>
+{% endblock %}

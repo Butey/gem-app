@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+
+{% block title %}Отладка поиска{% endblock %}
+
+{% block content %}
+<style>
+.debug-search {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+.debug-form {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.debug-form input {
+    flex: 1;
+    padding: 10px 15px;
+    font-size: 16px;
+    border: 2px solid #ddd;
+    border-radius: 4px;
+}
+.debug-form button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.debug-form button:hover {
+    background: #2980b9;
+}
+.debug-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    font-family: monospace;
+    font-size: 14px;
+}
+.debug-info strong {
+    color: #2c3e50;
+}
+.debug-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+.debug-table th, .debug-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+.debug-table th {
+    background: #3498db;
+    color: white;
+    font-weight: 600;
+}
+.debug-table tr:hover {
+    background: #f8f9fa;
+}
+.debug-table .id { width: 50px; }
+.debug-table .name { min-width: 150px; }
+.debug-table .category { width: 150px; }
+.debug-table .parent { width: 150px; }
+.debug-table .snippet { 
+    font-size: 13px; 
+    color: #666;
+    max-width: 400px;
+}
+.debug-table mark {
+    background: #ffeb3b;
+    padding: 1px 3px;
+    border-radius: 2px;
+}
+.debug-table img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+.debug-empty {
+    text-align: center;
+    padding: 40px;
+    color: #666;
+}
+.debug-sql {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 15px;
+    border-radius: 4px;
+    font-family: monospace;
+    font-size: 13px;
+    white-space: pre-wrap;
+    margin-bottom: 20px;
+}
+</style>
+
+<div class="debug-search">
+    <h1>🔍 Отладка поиска</h1>
+    
+    <form class="debug-form" method="get">
+        <input type="text" name="q" value="{{ query }}" placeholder="Введите поисковый запрос..." autofocus>
+        <button type="submit">Искать</button>
+    </form>
+    
+    {% if query %}
+    <div class="debug-info">
+        <strong>Запрос:</strong> "{{ query }}" | 
+        <strong>Длина:</strong> {{ query|length }} симв. | 
+        <strong>Результатов:</strong> {{ result_count }}
+    </div>
+    
+    <div class="debug-sql"><strong>SQL:</strong>
+{{ sql_query }}</div>
+    
+    {% if results %}
+    <table class="debug-table">
+        <thead>
+            <tr>
+                <th class="id">ID</th>
+                <th>Фото</th>
+                <th class="name">Название</th>
+                <th class="slug">Slug</th>
+                <th class="category">Категория</th>
+                <th class="parent">Родитель</th>
+                <th class="snippet">Сниппет / Описание</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in results %}
+            <tr>
+                <td>{{ result.id }}</td>
+                <td>
+                    {% if result.image_filename %}
+                    <a href="/gem/{{ result.slug }}">
+                        <img src="/uploads/{{ result.image_filename }}" alt="{{ result.name }}">
+                    </a>
+                    {% else %}
+                    <div style="width:50px;height:50px;background:#eee;border-radius:4px;"></div>
+                    {% endif %}
+                </td>
+                <td><a href="/gem/{{ result.slug }}" style="color:#3498db;text-decoration:none;"><strong>{{ result.name }}</strong></a></td>
+                <td><a href="/gem/{{ result.slug }}" style="color:#888;"><code>{{ result.slug }}</code></a></td>
+                <td><a href="/?category={{ result.category }}" style="color:#3498db;">{{ result.category }}</a></td>
+                <td>
+                    {% if result.parent_category %}
+                    <a href="/?parent_category={{ result.parent_category }}" style="color:#3498db;">{{ result.parent_category }}</a>
+                    {% else %}
+                    —
+                    {% endif %}
+                </td>
+                <td class="snippet">
+                    {% if result.snippet %}
+                        {{ result.snippet|safe }}
+                    {% else %}
+                        {{ result.description[:150] }}{% if result.description|length > 150 %}…{% endif %}
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <div class="debug-empty">
+        <p>Ничего не найдено по запросу "{{ query }}"</p>
+    </div>
+    {% endif %}
+    {% else %}
+    <div class="debug-empty">
+        <p>Введите поисковый запрос для проверки работы поиска</p>
+        <p><strong>Примеры:</strong> гранат, гра, мал, железо, мрамор</p>
+    </div>
+    {% endif %}
+    
+    <p style="margin-top:20px;">
+        <a href="{{ url_for('welcome') }}" style="color:#10b981;">← Вернуться на главную</a>
+        <span style="margin:0 10px; color:rgba(255,255,255,0.2);">|</span>
+        <a href="{{ url_for('catalog') }}" style="color:#a855f7;">Каталог</a>
+    </p>
+</div>
+{% endblock %}
