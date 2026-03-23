@@ -101,7 +101,7 @@
     padding: 1.25rem 1.75rem;
     display: flex;
     flex-direction: column;
-    gap: 0.85rem;
+    gap: 0.6rem;
     color: #fff;
     min-width: 0;
     overflow: hidden;
@@ -137,16 +137,16 @@
     color: rgba(255, 255, 255, 0.85);
     overflow: hidden;
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 5;
     -webkit-box-orient: vertical;
 }
 
 /* Раздел характеристик */
 .gem-glass-specs {
-    margin-top: auto;
+    margin-top: 0.3rem;
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.4rem;
 }
 
 .gem-glass-specs-title {
@@ -162,19 +162,20 @@
 .gem-glass-specs-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
-    max-height: 180px;
-    overflow: hidden;
+    gap: 0.4rem;
 }
 
 /* Карточка характеристики */
 .gem-glass-spec-item {
     background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
-    padding: 0.6rem;
+    padding: 0.5rem 0.6rem;
     border: 1px solid rgba(255, 255, 255, 0.08);
     transition: all 0.2s ease;
     min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
 }
 
 .gem-glass-spec-item:hover {
@@ -187,17 +188,16 @@
     text-transform: uppercase;
     letter-spacing: 0.03em;
     color: rgba(255, 255, 255, 0.55);
-    margin-bottom: 0.25rem;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
 
 .gem-glass-spec-value {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     color: #fff;
     font-weight: 500;
-    line-height: 1.3;
+    line-height: 1.25;
     word-break: break-word;
 }
 
@@ -224,10 +224,6 @@
         max-height: none;
     }
     
-    .gem-glass-specs-grid {
-        max-height: none;
-    }
-    
     .gem-glass-title {
         font-size: 1.5rem;
     }
@@ -245,7 +241,7 @@
     
     .gem-glass-content {
         padding: 1.25rem;
-        gap: 0.75rem;
+        gap: 0.5rem;
     }
     
     .gem-glass-title {
