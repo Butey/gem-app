@@ -50,7 +50,7 @@
                         {% set mohs_position = ((mohs_value - 1) / 9) * 100 %}
                         {% set mohs_bg_color = value|mohs_color %}
                         {% set mohs_text_color = mohs_bg_color|text_color %}
-                        <div class="gem-glass-spec-item mohs-item">
+                        <div class="gem-glass-spec-item">
                             <div class="gem-glass-spec-label">Твёрдость</div>
                             <div class="mohs-bar-container">
                                 <span class="mohs-number mohs-number-left">1</span>
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         {% elif label == 'Цвета' or label == 'Цвет' %}
-                        <div class="gem-glass-spec-item colors-item">
+                        <div class="gem-glass-spec-item">
                             <div class="gem-glass-spec-label">Цвета</div>
                             <div class="color-swatch-list">
                                 {% for color in value.split(',') %}
