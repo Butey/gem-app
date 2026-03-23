@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+env/
+
+# Логи и временные файлы
+logs/*
+!logs/.gitkeep
+temp/*
+!temp/.gitkeep
+*.log
+
+# База данных (опционально)
+# gems.db
+
+# Загрузки (опционально)
+# uploads/*
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Бэкапы (храним отдельно)
+backups/*
+!backups/.gitkeep
+
+# PID файл
+app.pid

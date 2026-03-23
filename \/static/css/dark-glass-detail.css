@@ -1,0 +1,763 @@
+/* 
+ * Dark Glassmorphism Style — Part 3
+ * Страница минерала, лайтбокс, админка
+ */
+
+/* === Страница минерала === */
+.gem-detail {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 1.5rem;
+}
+
+/* Хлебные крошки */
+.breadcrumbs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 2rem;
+    font-size: 0.9rem;
+    color: rgba(226, 232, 240, 0.6);
+}
+
+.breadcrumbs a {
+    color: #10b981;
+    text-decoration: none;
+    padding: 4px 10px;
+    border-radius: 6px;
+    transition: all 0.3s ease;
+}
+
+.breadcrumbs a:hover {
+    background: rgba(16, 185, 129, 0.15);
+    color: #6ee7b7;
+}
+
+.crumb-sep {
+    color: rgba(226, 232, 240, 0.3);
+}
+
+/* Заголовок */
+.gem-detail-header {
+    margin-bottom: 2rem;
+}
+
+.gem-title {
+    font-size: 3rem;
+    color: #e2e8f0;
+    margin: 0 0 1.5rem 0;
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: -1px;
+}
+
+/* Вступление */
+.gem-intro-wrapper {
+    display: flex;
+    gap: 2.5rem;
+    margin-bottom: 3rem;
+    align-items: center;
+}
+
+.gem-intro-column {
+    flex: 1;
+    min-width: 0;
+}
+
+.gem-intro {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    color: rgba(226, 232, 240, 0.8);
+    margin-bottom: 2rem;
+}
+
+.gem-image-column {
+    flex-shrink: 0;
+    width: 500px;
+}
+
+.gem-detail-main-image {
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+    position: sticky;
+    top: 120px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.gem-detail-main-image img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: all 0.3s ease;
+}
+
+.gem-detail-main-image img:hover {
+    transform: scale(1.03);
+    filter: brightness(1.1);
+}
+
+/* Миниатюры галереи */
+.gem-thumbnails {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+    margin-top: 1.25rem;
+}
+
+.gem-thumbnails .thumbnail {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 12px;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    filter: grayscale(0.3);
+}
+
+.gem-thumbnails .thumbnail:hover {
+    border-color: #10b981;
+    transform: scale(1.05);
+    filter: grayscale(0);
+    box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
+}
+
+/* Карточки характеристик на всю ширину */
+.gem-specs-grid-full {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gem-spec-card-full {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 1rem;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.gem-spec-card-full:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 10px 40px rgba(168, 85, 247, 0.15);
+}
+
+/* Карточки характеристик (старые, для совместимости) */
+.gem-specs-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gem-spec-card {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 0.75rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.gem-spec-card:hover {
+    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(168, 85, 247, 0.3);
+    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15);
+}
+
+.spec-label {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: rgba(226, 232, 240, 0.5);
+    margin-bottom: 0.35rem;
+    letter-spacing: 0.1em;
+}
+
+.spec-value {
+    font-size: 0.85rem;
+    color: #e2e8f0;
+    font-weight: 400;
+    line-height: 1.4;
+}
+
+/* Шкала Мооса */
+.mohs-scale-new {
+    margin-top: 6px;
+}
+
+.mohs-bar-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.mohs-number {
+    font-size: 10px;
+    font-weight: 500;
+    color: rgba(226, 232, 240, 0.4);
+    min-width: 10px;
+    flex-shrink: 0;
+}
+
+.mohs-bar {
+    flex: 1;
+    height: 6px;
+    background: linear-gradient(90deg, 
+        #F5F5F5 0%, 
+        #B0E0E6 11%, 
+        #48D1CC 22%, 
+        #90EE90 33%, 
+        #C4D300 44%, 
+        #FFD700 55%, 
+        #FF8C00 66%, 
+        #FF4500 77%, 
+        #800020 88%, 
+        #121212 100%);
+    border-radius: 3px;
+    position: relative;
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+}
+
+.mohs-badge {
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(168, 85, 247, 0.9);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    color: #fff;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1;
+    white-space: nowrap;
+    z-index: 1;
+    border: 1px solid rgba(168, 85, 247, 0.5);
+    box-shadow: 0 3px 15px rgba(168, 85, 247, 0.4);
+}
+
+/* Цветовые свотчи */
+.color-swatch-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+
+.color-swatch {
+    width: 28px;
+    height: 22px;
+    border-radius: 5px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+}
+
+.color-swatch:hover {
+    transform: scale(1.15);
+    border-color: rgba(255, 255, 255, 0.4);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+/* Основной контент - единый блок */
+.gem-content-single {
+    margin-bottom: 2rem;
+}
+
+.gem-content-text {
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gem-content-text p {
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.8;
+    color: rgba(226, 232, 240, 0.85);
+    margin-left: 0;
+}
+
+.gem-content-text p:last-child {
+    margin-bottom: 0;
+}
+
+.gem-content-text strong {
+    color: #10b981;
+    font-weight: 600;
+    font-size: 0.95rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+/* Старые стили секций (для совместимости) */
+.gem-content {
+    margin-bottom: 3rem;
+}
+
+.gem-section {
+    margin-bottom: 3rem;
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.gem-section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: rgba(226, 232, 240, 0.5);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin: 0 0 1.5rem 0;
+}
+
+.section-content {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: rgba(226, 232, 240, 0.8);
+}
+
+/* Навигация */
+.gem-detail-nav {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-top: 2rem;
+}
+
+.back-link, .next-link {
+    display: inline-block;
+    padding: 0.875rem 1.75rem;
+    background: rgba(168, 85, 247, 0.2);
+    color: #c084fc;
+    text-decoration: none;
+    border-radius: 12px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.back-link:hover, .next-link:hover {
+    background: rgba(168, 85, 247, 0.3);
+    border-color: #a855f7;
+    color: #e9d5ff;
+    box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+    transform: translateY(-2px);
+}
+
+/* === Лайтбокс === */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.lightbox-content {
+    max-width: 90%;
+    max-height: 80vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content img {
+    max-width: 100%;
+    max-height: 80vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 20px 100px rgba(0, 0, 0, 0.8);
+}
+
+.lightbox-close {
+    position: absolute;
+    top: 30px;
+    right: 40px;
+    color: #fff;
+    font-size: 48px;
+    font-weight: 300;
+    cursor: pointer;
+    z-index: 1001;
+    transition: all 0.3s ease;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.lightbox-close:hover {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+    transform: rotate(90deg);
+}
+
+.lightbox-prev, .lightbox-next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #fff;
+    font-size: 48px;
+    cursor: pointer;
+    z-index: 1001;
+    padding: 20px;
+    user-select: none;
+    transition: all 0.3s ease;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+}
+
+.lightbox-prev:hover, .lightbox-next:hover {
+    color: #a855f7;
+    background: rgba(168, 85, 247, 0.1);
+}
+
+.lightbox-prev {
+    left: 30px;
+}
+
+.lightbox-next {
+    right: 30px;
+}
+
+.lightbox-caption {
+    color: rgba(255, 255, 255, 0.8);
+    text-align: center;
+    padding: 20px;
+    font-size: 1rem;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* === Админка === */
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 2rem 0 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.admin-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-table th, .admin-table td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.admin-table th { 
+    background: rgba(255, 255, 255, 0.03);
+    font-weight: 600;
+    color: rgba(226, 232, 240, 0.7);
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+}
+
+.admin-table tr:hover {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.btn {
+    display: inline-block;
+    padding: 0.625rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.btn-primary { 
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(16, 185, 129, 0.2));
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.3);
+}
+
+.btn-primary:hover { 
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(16, 185, 129, 0.3));
+    border-color: #10b981;
+    color: #6ee7b7;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.btn-secondary { 
+    background: rgba(255, 255, 255, 0.05);
+    color: rgba(226, 232, 240, 0.7);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-secondary:hover { 
+    background: rgba(255, 255, 255, 0.08);
+    color: #e2e8f0;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.btn-delete {
+    background: rgba(239, 68, 68, 0.2);
+    color: #ef4444;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    padding: 0.4rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+    background: rgba(239, 68, 68, 0.3);
+    border-color: #ef4444;
+    color: #fca5a5;
+    box-shadow: 0 0 20px rgba(239, 68, 68, 0.3);
+}
+
+/* Формы */
+.admin-form, .admin-login {
+    max-width: 700px;
+    margin: 2rem auto;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 2rem;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.admin-form label, .admin-login label {
+    display: block;
+    margin: 1.25rem 0;
+}
+
+.admin-form input, .admin-form select, .admin-form textarea,
+.admin-login input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    margin-top: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    color: #e2e8f0;
+    transition: all 0.3s ease;
+}
+
+.admin-form input:focus, .admin-form select:focus, .admin-form textarea:focus,
+.admin-login input:focus {
+    outline: none;
+    border-color: #10b981;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+.admin-form textarea { 
+    min-height: 120px; 
+    resize: vertical; 
+}
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+    justify-content: flex-end;
+}
+
+/* Уведомления */
+.flash {
+    padding: 1rem 1.25rem;
+    margin: 1.25rem 0;
+    border-radius: 10px;
+    border-left: 4px solid;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+}
+
+.flash.success { 
+    background: rgba(16, 185, 129, 0.1);
+    border-color: #10b981; 
+    color: #6ee7b7; 
+}
+
+.flash.error { 
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444; 
+    color: #fca5a5; 
+}
+
+.flash.warning { 
+    background: rgba(245, 158, 11, 0.1);
+    border-color: #f59e0b; 
+    color: #fcd34d; 
+}
+
+.flash.info { 
+    background: rgba(59, 130, 246, 0.1);
+    border-color: #3b82f6; 
+    color: #93c5fd; 
+}
+
+/* Футер */
+.site-footer {
+    margin-top: 4rem;
+    padding: 2.5rem 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: rgba(226, 232, 240, 0.5);
+    font-size: 0.9rem;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.site-footer a { 
+    color: #10b981;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.site-footer a:hover {
+    color: #6ee7b7;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+/* === Адаптивность === */
+@media (max-width: 1200px) {
+    .gems-list {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
+    .gems-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .main-categories {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .gem-title {
+        font-size: 2.5rem;
+    }
+
+    .gem-specs-grid-full {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .gem-specs-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .gem-detail-nav {
+        flex-direction: column;
+    }
+
+    .back-link, .next-link {
+        text-align: center;
+    }
+
+    .gem-intro-wrapper {
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .gem-image-column {
+        width: 100%;
+    }
+
+    .gem-detail-main-image {
+        position: static;
+    }
+
+    .welcome-title {
+        font-size: 2.5rem;
+    }
+
+    .alphabet-index {
+        gap: 4px;
+    }
+
+    .alphabet-letter {
+        min-width: 28px;
+        height: 36px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 600px) {
+    .gem-specs-grid-full {
+        grid-template-columns: 1fr;
+    }
+    .category-filter {
+        flex-direction: column;
+    }
+    .cat-btn {
+        width: 100%;
+        text-align: center;
+    }
+    
+    .site-header .container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .search-form { 
+        max-width: 100%; 
+    }
+}
