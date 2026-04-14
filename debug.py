@@ -27,7 +27,7 @@ def debug_search():
             query_upper = query.capitalize()
             sql_query = '''
                 SELECT g.id, g.name, g.slug, g.category, g.parent_category, g.image_filename,
-                       g.description
+                       g.description, g.properties
                 FROM gems g
                 WHERE g.name LIKE ? OR g.name LIKE ? OR
                       g.description LIKE ? OR g.description LIKE ?
@@ -41,7 +41,7 @@ def debug_search():
             fts_query = ' '.join(f'{term}*' for term in terms)
             sql_query = '''
                 SELECT g.id, g.name, g.slug, g.category, g.parent_category, g.image_filename,
-                       g.description,
+                       g.description, g.properties,
                        snippet(gems_search, 0, '<mark>', '</mark>', '…', 50) as snippet
                 FROM gems_search
                 JOIN gems g ON gems_search.rowid = g.id
