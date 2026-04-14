@@ -303,6 +303,62 @@ sudo userdel -r gems
 
 ---
 
+### Переменные окружения (ENV)
+
+Вместо хранения учётных данных в коде используйте **переменные окружения**.
+
+#### Настройка
+
+**Вариант 1 — через systemd:**
+
+Отредактируйте файл службы:
+```bash
+sudo nano /etc/systemd/system/gems_app.service
+```
+
+Добавьте строки в секцию `[Service]`:
+```ini
+[Service]
+# ... существующие строки ...
+Environment="ADMIN_USERNAME=myuser"
+Environment="ADMIN_PASSWORD=secret123"
+```
+
+Перезапустите сервис:
+```bash
+sudo systemctl daemon-reload
+sudo systemctl restart gems_app.service
+```
+
+**Вариант 2 — через командную строку:**
+```bash
+export ADMIN_USERNAME=myuser
+export ADMIN_PASSWORD=secret123
+sudo systemctl restart gems_app.service
+```
+
+#### Доступные переменные
+
+| Переменная | По умолчанию | Описание |
+|-----------|-------------|----------|
+| `ADMIN_USERNAME` | `admin` | Логин админ-панели |
+| `ADMIN_PASSWORD` | `museum2026` | Пароль админ-панели |
+| `SECRET_KEY` | `dev-key-change-in-prod` | Ключ сессий Flask |
+
+#### Проверка
+
+```bash
+# Проверить текущие значения
+systemctl show gems_app.service | grep Environment
+
+# Протестировать вход
+curl -I http://localhost:5000/admin/login
+```
+
+⚠️ **В production обязательно смените `SECRET_KEY` и админ-пароль!**
+
+---
+
 ## 📞 Поддержка
 
 - **Документация:** `/opt/gems_app/DEPLOY.md`

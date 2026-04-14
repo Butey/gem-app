@@ -11,3 +11,8 @@ class Config:
     UPLOAD_FOLDER = os.path.join(BASE_DIR, 'uploads')
     MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16MB max upload
     PERMANENT_SESSION_LIFETIME = timedelta(hours=2)
+
+    # Админ-панель: учётные данные
+    # ⚠️ В production использовать переменные окружения!
+    ADMIN_USERNAME = os.environ.get('ADMIN_USERNAME', 'admin')
+    ADMIN_PASSWORD = os.environ.get('ADMIN_PASSWORD', 'museum2026')
