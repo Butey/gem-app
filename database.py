@@ -1,10 +1,10 @@
-from models import db, Gem
+from models import db, Gem, User
 import sqlite3
 import os
 
 def init_app(app):
     db.init_app(app)
-    
+
 def create_tables(app):
     with app.app_context():
         db.create_all()

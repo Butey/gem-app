@@ -1,4 +1,4 @@
-/* 
+/*
  * Dark Glassmorphism Style — Part 2
  * Карточки, алфавит, страницы
  */
@@ -13,10 +13,10 @@
 
 /* === Карточка минерала === */
 .gem-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--card-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
     border-radius: 16px;
     overflow: hidden;
     transition: all 0.3s ease;
@@ -25,10 +25,10 @@
 }
 
 .gem-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(16, 185, 129, 0.4);
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
     transform: translateY(-8px);
-    box-shadow: 0 20px 60px rgba(16, 185, 129, 0.2),
+    box-shadow: var(--shadow-lg),
                 0 0 40px rgba(16, 185, 129, 0.1);
 }
 
@@ -39,13 +39,125 @@
 .gem-parent-category {
     display: block;
     font-size: 0.7rem;
-    color: #a855f7;
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.15em;
     margin-bottom: 0.5rem;
     text-decoration: none;
     font-weight: 600;
     transition: color 0.3s ease;
+}
+
+.gem-parent-category:hover {
+    color: var(--accent-primary);
+}
+
+.gem-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.gem-name:hover {
+    color: var(--accent-primary);
+}
+
+.gem-image {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.gem-info {
+    padding: 1rem 1.25rem;
+    flex: 1;
+}
+
+.gem-category {
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.gem-category strong {
+    color: #000000;
+    font-weight: 700;
+}
+
+.gem-moos, .gem-colors {
+    margin-top: 0.75rem;
+}
+
+.moos-label, .colors-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+    display: block;
+    font-weight: 500;
+}
+
+.moos-value {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    border-radius: 9999px;
+    font-size: 0.85rem;
+    font-weight: 500;
+}
+
+.colors-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.color-swatch {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.25rem 0.75rem;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 9999px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.color-dot {
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    border: 1px solid var(--glass-border);
+}
+
+.gem-footer {
+    padding: 1rem 1.25rem;
+    border-top: 1px solid var(--divider-color);
+}
+
+.gem-link {
+    display: block;
+    text-align: center;
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.3), rgba(16, 185, 129, 0.1));
+    border: 1px solid var(--accent-primary);
+    border-radius: 9999px;
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.gem-link:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.5), rgba(16, 185, 129, 0.2));
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
 }
 
 .gem-parent-category:hover {
@@ -56,18 +168,18 @@
 .gem-category-label {
     display: block;
     font-size: 0.7rem;
-    color: rgba(226, 232, 240, 0.4);
+    color: var(--text-secondary);
     text-transform: uppercase;
     letter-spacing: 0.1em;
     margin-bottom: 0.5rem;
-    font-weight: 400;
+    font-weight: 500;
 }
 
 .gem-name {
     font-size: 1.1rem;
     margin: 0;
-    font-weight: 500;
-    color: #e2e8f0;
+    font-weight: 700;
+    color: var(--text-primary);
     letter-spacing: -0.3px;
 }
 
@@ -78,7 +190,7 @@
 }
 
 .gem-name a:hover {
-    color: #10b981;
+    color: var(--accent-primary);
     text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
 }
 
@@ -124,50 +236,50 @@
 
 /* === Алфавитный указатель === */
 .alphabet-index {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 6px;
+    display: grid;
+    grid-template-columns: repeat(11, 1fr);
+    gap: 8px;
     margin: 2rem 0;
-    padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
+    padding: 1.25rem;
+    background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
     border-radius: 16px;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .alphabet-letter {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     min-width: 32px;
-    height: 40px;
-    padding: 0 10px;
-    color: #10b981;
+    height: 38px;
+    color: var(--accent-primary);
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
     border-radius: 8px;
     transition: all 0.3s ease;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: var(--badge-bg);
+    border: 1px solid var(--accent-primary);
 }
 
 .alphabet-letter:hover {
-    background: rgba(16, 185, 129, 0.25);
-    border-color: #10b981;
-    color: #6ee7b7;
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4),
-                0 0 40px rgba(16, 185, 129, 0.2);
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    color: var(--accent-hover);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
 }
 
 .alphabet-letter-active {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(16, 185, 129, 0.2));
-    border-color: #10b981;
-    color: #6ee7b7;
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
 }
 
 .alphabet-letter-empty {
@@ -177,12 +289,12 @@
     min-width: 32px;
     height: 40px;
     padding: 0 10px;
-    color: rgba(226, 232, 240, 0.2);
+    color: var(--text-muted);
     font-size: 14px;
     font-weight: 500;
     cursor: default;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
 }
 
 /* === Стартовая страница === */
@@ -193,8 +305,849 @@
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-radius: 24px;
-    margin: 2rem 0 3rem;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin: 2rem auto 3rem;
+    max-width: 1200px;
+    border: 1px solid var(--glass-border);
+}
+
+/* Блок действий: переключатель темы, поиск, вход */
+.welcome-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin: 2rem auto;
+    padding: 1.5rem;
+    background: var(--card-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    max-width: 900px;
+    position: relative;
+    z-index: 1000;
+}
+
+.theme-toggle-main {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.theme-toggle-main:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.1);
+}
+
+.theme-toggle-icon-main {
+    font-size: 1.25rem;
+}
+
+.welcome-search-container {
+    flex: 1;
+    max-width: 400px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.welcome-search-inline {
+    flex: 1;
+}
+
+.welcome-search-inline input {
+    width: 100%;
+    padding: 0.6rem 1.25rem;
+    border: 1px solid var(--search-border);
+    border-radius: 9999px;
+    font-size: 0.95rem;
+    background: var(--search-bg);
+    color: var(--search-text);
+    box-sizing: border-box;
+}
+
+.welcome-search-inline input::placeholder {
+    color: var(--text-muted);
+}
+
+.welcome-search-inline input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: var(--card-hover);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+/* Кнопка поиска */
+.search-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.search-submit-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.search-submit-btn:active {
+    transform: scale(1);
+}
+
+/* Выпадающие подсказки для поиска */
+.suggestions-dropdown,
+#search-suggestions-actions {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    min-width: 350px;
+    background: var(--bg-secondary);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    z-index: 1001;
+    box-shadow: var(--shadow-lg);
+}
+
+.suggestions-dropdown.active,
+#search-suggestions-actions.active {
+    display: block;
+}
+
+.suggestion-item {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--divider-color);
+    cursor: pointer;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+    border-radius: 0 0 16px 16px;
+}
+
+.suggestion-item:hover, .suggestion-item.active {
+    background: var(--card-hover);
+}
+
+.suggestion-thumb {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: var(--glass-bg);
+    flex-shrink: 0;
+    border: 1px solid var(--glass-border);
+}
+
+.suggestion-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.suggestion-name {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.suggestion-category {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+}
+
+/* Разделитель секций */
+.suggestion-section-divider {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.625rem 1.25rem;
+    background: var(--card-hover);
+    border-bottom: 1px solid var(--divider-color);
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.suggestion-section-divider .section-count {
+    background: var(--badge-bg);
+    color: var(--badge-text);
+    padding: 0.125rem 0.5rem;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+/* Empty state для поиска */
+.search-empty-state {
+    padding: 2rem 1.5rem;
+    text-align: center;
+}
+
+.empty-state-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.empty-state-text {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* Популярные минералы */
+.popular-gems {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--divider-color);
+}
+
+.popular-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1rem;
+}
+
+.popular-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem;
+}
+
+.popular-gem {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 8px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.popular-gem:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    transform: translateY(-2px);
+}
+
+.popular-icon {
+    font-size: 1.25rem;
+    flex-shrink: 0;
+}
+
+.popular-name {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--text-primary);
+}
+
+/* ===== Search Modal (Next.js Style) ===== */
+.search-modal-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 0.875rem;
+    background: var(--search-bg);
+    border: 1px solid var(--search-border);
+    border-radius: 9999px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+}
+
+.search-modal-trigger:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.search-trigger-text {
+    font-weight: 400;
+}
+
+.search-hotkey {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.125rem 0.375rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Modal Overlay */
+.search-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 12vh;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-modal-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Modal Container */
+.search-modal {
+    width: 60%;
+    min-width: 600px;
+    max-width: 900px;
+    max-height: 70vh;
+    height: auto;
+    aspect-ratio: 4/3;
+    background: var(--bg-secondary);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    box-shadow: var(--shadow-lg);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.96) translateY(-8px);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.search-modal-overlay.active .search-modal {
+    transform: scale(1) translateY(0);
+}
+
+/* Modal Header */
+.search-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--divider-color);
+    background: rgba(255, 255, 255, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+}
+
+.search-modal-icon {
+    color: var(--text-muted);
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
+}
+
+.search-modal-input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1.1rem;
+    color: var(--text-primary);
+}
+
+.search-modal-input::placeholder {
+    color: var(--text-muted);
+}
+
+.modal-esc-hint {
+    padding: 0.25rem 0.5rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 6px;
+    font-size: 0.65rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+}
+
+/* Search Results */
+.search-modal-results {
+    overflow-y: auto;
+    max-height: 400px;
+    padding: 0.5rem 1rem;
+    position: relative;
+    z-index: 1;
+}
+
+/* Quick Categories в поиске */
+.search-quick-cats {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.search-quick-cats[style*="display: none"],
+.search-popular-minerals[style*="display: none"] {
+    display: none !important;
+}
+
+.quick-cat-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+}
+
+.quick-cat-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.quick-cat-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.quick-cat-item:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    transform: translateX(6px);
+}
+
+.quick-cat-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+}
+
+.quick-cat-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.quick-cat-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+}
+
+.quick-cat-item:hover .quick-cat-name {
+    color: var(--text-primary);
+}
+
+/* Popular Minerals */
+.search-popular-minerals {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--divider-color);
+}
+
+.popular-minerals-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 1.25rem;
+}
+
+.popular-minerals-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1rem;
+}
+
+.popular-mineral-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+    position: relative;
+    z-index: 10;
+}
+
+.popular-mineral-item:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.25);
+    z-index: 20;
+}
+
+.popular-mineral-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    flex-shrink: 0;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+}
+
+.popular-mineral-icon {
+    font-size: 1.5rem;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+}
+
+.popular-mineral-name {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+    transition: color 0.2s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.popular-mineral-item:hover .popular-mineral-name {
+    color: var(--text-primary);
+}
+
+/* Hover Card для минералов */
+.mineral-hover-card {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(10px);
+    width: 280px;
+    background: var(--bg-secondary);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 14px;
+    padding: 1.25rem;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 30;
+}
+
+.popular-mineral-item:hover .mineral-hover-card {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(10px);
+}
+
+.hover-card-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 0.75rem;
+    border: 1px solid var(--glass-border);
+}
+
+.hover-card-content {
+    text-align: left;
+}
+
+.hover-card-name {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.hover-card-category {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.search-modal-empty {
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.empty-state-illustration {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    opacity: 0.5;
+}
+
+.empty-state-hint {
+    font-size: 0.95rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+}
+
+/* Modal Results Items */
+.modal-result-item {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.75rem 1rem;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-decoration: none;
+}
+
+.modal-result-item:hover,
+.modal-result-item.active {
+    background: var(--card-hover);
+}
+
+.modal-result-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    object-fit: cover;
+    background: var(--glass-bg);
+    flex-shrink: 0;
+}
+
+.modal-result-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.modal-result-title {
+    font-weight: 600;
+    color: var(--text-primary);
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}
+
+.modal-result-category {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.modal-result-arrow {
+    color: var(--text-muted);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.modal-result-item:hover .modal-result-arrow {
+    opacity: 1;
+}
+
+/* Section Dividers in Modal */
+.modal-section-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 1rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.modal-section-divider::before,
+.modal-section-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--divider-color);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .search-modal-trigger {
+        padding: 0.5rem;
+    }
+    
+    .search-trigger-text {
+        display: none;
+    }
+    
+    .search-modal-overlay {
+        padding-top: 0;
+        align-items: center;
+    }
+    
+    .search-modal {
+        width: 90%;
+        min-width: auto;
+        max-height: 80vh;
+    }
+    
+    .search-category-filters {
+        padding: 0.5rem 0.75rem;
+    }
+    
+    .category-filter {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .quick-cat-list {
+        grid-template-columns: repeat(1, 1fr);
+    }
+    
+    .popular-minerals-list {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.admin-login-btn-main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+}
+
+.admin-login-btn-main:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+}
+
+/* Кнопка поиска на главной */
+.search-modal-trigger-main {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    background: var(--search-bg);
+    border: 1px solid var(--search-border);
+    border-radius: 12px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9rem;
+    flex: 1;
+    max-width: 300px;
+    justify-content: flex-start;
+}
+
+.search-modal-trigger-main:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+}
+
+.search-modal-trigger-main .search-trigger-text {
+    font-weight: 400;
+    color: var(--text-muted);
+}
+
+.search-modal-trigger-main:hover .search-trigger-text {
+    color: var(--text-secondary);
+}
+
+/* Кнопка поиска на главной */
+.search-submit-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-hover));
+    border: none;
+    border-radius: 50%;
+    color: #fff;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.search-submit-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+}
+
+.search-submit-btn:active {
+    transform: scale(1);
+}
+
+.welcome-search-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .welcome-title {
@@ -202,7 +1155,7 @@
     font-weight: 700;
     margin: 0 0 1rem 0;
     letter-spacing: -2px;
-    background: linear-gradient(135deg, #10b981, #a855f7);
+    background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -210,12 +1163,12 @@
 
 .welcome-subtitle {
     font-size: 1.1rem;
-    color: rgba(226, 232, 240, 0.7);
+    color: var(--text-secondary);
     margin: 0;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    font-weight: 300;
+    font-weight: 400;
 }
 
 .welcome-categories {

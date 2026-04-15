@@ -7,7 +7,7 @@ Gems Encyclopedia App — Каталог минералов с поиском и
 from flask import Flask, render_template, request, jsonify, redirect, url_for, send_from_directory, abort, session, flash
 from werkzeug.utils import secure_filename
 from config import Config
-from models import db, Gem
+from models import db, Gem, User
 from database import init_app, create_tables
 from search import search_gems
 from debug import debug_bp
@@ -113,9 +113,28 @@ def catalog():
     if letter:
         query = query.filter(Gem.name.ilike(f'{letter}%'))
 
-    # Поиск по названию
+    # Поиск по названию и описанию
     if search_query:
-        query = query.filter(Gem.name.ilike(f'%{search_query}%'))
+        # Для коротких запросов (≤3 символов) используем префиксный поиск
+        if len(search_query) <= 3:
+            # SQLite не поддерживает LOWER/UPPER для кириллицы, поэтому ищем по обоим регистрам
+            query = query.filter(
+                (Gem.name.like(f'{search_query}%')) |
+                (Gem.name.like(f'{search_query.upper()}%')) |
+                (Gem.name.like(f'{search_query.capitalize()}%')) |
+                (Gem.description.like(f'%{search_query}%')) |
+                (Gem.description.like(f'%{search_query.upper()}%')) |
+                (Gem.description.like(f'%{search_query.capitalize()}%'))
+            )
+        # Для длинных запросов используем FTS5 через search.py
+        else:
+            # Получаем ID минералов через search.py
+            fts_results = search_gems(app, search_query.lower(), limit=100)
+            gem_ids = [r['id'] for r in fts_results]
+            if gem_ids:
+                query = query.filter(Gem.id.in_(gem_ids))
+            else:
+                query = query.filter(Gem.id == -1)  # Ничего не найдено
 
     # Сортировка по названию
     gems = query.order_by(Gem.name).paginate(page=page, per_page=per_page, error_out=False)
@@ -148,10 +167,13 @@ def admin_login():
         username = request.form.get('username')
         password = request.form.get('password')
         
-        if username == ADMIN_CREDENTIALS['username'] and password == ADMIN_CREDENTIALS['password']:
+        # Проверка через модель User
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
             session['admin_logged_in'] = True
+            session['admin_username'] = username
             session.permanent = True
-            flash('Вход выполнен', 'success')
+            flash(f'Вход выполнен, {username}', 'success')
             return redirect(url_for('admin_dashboard'))
         else:
             flash('Неверные учётные данные', 'error')
@@ -162,15 +184,89 @@ def admin_login():
 @app.route('/admin/logout')
 def admin_logout():
     session.pop('admin_logged_in', None)
+    session.pop('admin_username', None)
     flash('Выход выполнен', 'info')
-    return redirect(url_for('index'))
+    return redirect(url_for('welcome'))
 
 # === Админка: CRUD ===
 @app.route('/admin')
 @admin_required
 def admin_dashboard():
     gems = Gem.query.order_by(Gem.name).all()
-    return render_template('admin_dashboard.html', gems=gems)
+    debug_search_enabled = app.config.get('DEBUG_SEARCH', False)
+    return render_template('admin_dashboard.html', gems=gems, debug_search_enabled=debug_search_enabled)
+
+@app.route('/admin/settings', methods=['GET', 'POST'])
+@admin_required
+def admin_settings():
+    """Настройки админ-панели"""
+    if request.method == 'POST':
+        # Сохранение настроек в сессии (для текущей сессии)
+        debug_search = request.form.get('debug_search') == 'on'
+        session['debug_search_enabled'] = debug_search
+        app.config['DEBUG_SEARCH'] = debug_search
+        flash('Настройки сохранены', 'success')
+        return redirect(url_for('admin_settings'))
+
+    debug_search_enabled = session.get('debug_search_enabled', app.config.get('DEBUG_SEARCH', False))
+    return render_template('admin_settings.html', debug_search_enabled=debug_search_enabled)
+
+@app.route('/api/theme', methods=['POST'])
+def save_theme():
+    """Сохранение темы пользователя в сессии"""
+    from flask import request
+    data = request.get_json()
+    theme = data.get('theme', 'dark')
+    session['theme'] = theme
+    return jsonify({'success': True, 'theme': theme})
+
+@app.route('/admin/users')
+@admin_required
+def admin_users():
+    """Управление пользователями"""
+    users = User.query.order_by(User.username).all()
+    return render_template('admin_users.html', users=users)
+
+@app.route('/admin/users/create', methods=['POST'])
+@admin_required
+def admin_create_user():
+    """Создание нового пользователя"""
+    username = request.form.get('username', '').strip()
+    password = request.form.get('password', '')
+    
+    if not username or not password:
+        flash('Имя пользователя и пароль обязательны', 'error')
+        return redirect(url_for('admin_users'))
+    
+    existing = User.query.filter_by(username=username).first()
+    if existing:
+        flash('Пользователь с таким именем уже существует', 'error')
+        return redirect(url_for('admin_users'))
+    
+    user = User(username=username)
+    user.set_password(password)
+    db.session.add(user)
+    db.session.commit()
+    
+    flash(f'Пользователь {username} создан', 'success')
+    return redirect(url_for('admin_users'))
+
+@app.route('/admin/users/delete/<int:user_id>', methods=['POST'])
+@admin_required
+def admin_delete_user(user_id):
+    """Удаление пользователя"""
+    user = User.query.get_or_404(user_id)
+    
+    # Нельзя удалить последнего пользователя
+    if User.query.count() <= 1:
+        flash('Нельзя удалить последнего пользователя', 'error')
+        return redirect(url_for('admin_users'))
+    
+    db.session.delete(user)
+    db.session.commit()
+    
+    flash('Пользователь удалён', 'success')
+    return redirect(url_for('admin_users'))
 
 @app.route('/admin/create', methods=['GET', 'POST'])
 @admin_required

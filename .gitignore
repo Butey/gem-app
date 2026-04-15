@@ -37,3 +37,14 @@ backups/*
 
 # PID файл
 app.pid
+
+# Qwen Code
+.qwen/
+
+# Файлы профиля bash
+.bash_logout
+.bashrc
+.profile
+
+# Ссылка на историю чата (хранится вне проекта)
+CHAT_HISTORY_LINK.md

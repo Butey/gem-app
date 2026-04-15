@@ -11,10 +11,10 @@ set -e  # Останавливаемся при ошибке
 
 # === Настройки ===
 APP_NAME="gems_app"
-APP_DIR="/opt/$APP_NAME"
+APP_DIR="/opt/gem-app"
 VENV_DIR="$APP_DIR/venv"
-USER="gems"
-GROUP="gems"
+USER="root"
+GROUP="root"
 PORT=5000
 HOST="0.0.0.0"
 LOG_FILE="$APP_DIR/logs/app.log"

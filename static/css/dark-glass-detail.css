@@ -1,4 +1,4 @@
-/* 
+/*
  * Dark Glassmorphism Style — Part 3
  * Страница минерала, лайтбокс, админка
  */
@@ -17,11 +17,11 @@
     gap: 10px;
     margin-bottom: 2rem;
     font-size: 0.9rem;
-    color: rgba(226, 232, 240, 0.6);
+    color: var(--text-muted);
 }
 
 .breadcrumbs a {
-    color: #10b981;
+    color: var(--link-color);
     text-decoration: none;
     padding: 4px 10px;
     border-radius: 6px;
@@ -29,12 +29,13 @@
 }
 
 .breadcrumbs a:hover {
-    background: rgba(16, 185, 129, 0.15);
-    color: #6ee7b7;
+    background: var(--badge-bg);
+    color: var(--link-hover);
 }
 
 .crumb-sep {
-    color: rgba(226, 232, 240, 0.3);
+    color: var(--text-muted);
+    opacity: 0.5;
 }
 
 /* Заголовок */
@@ -44,7 +45,7 @@
 
 .gem-title {
     font-size: 3rem;
-    color: #e2e8f0;
+    color: var(--text-primary);
     margin: 0 0 1.5rem 0;
     font-weight: 700;
     line-height: 1.2;
@@ -56,7 +57,7 @@
     display: flex;
     gap: 2.5rem;
     margin-bottom: 3rem;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .gem-intro-column {
@@ -67,7 +68,7 @@
 .gem-intro {
     font-size: 1.1rem;
     line-height: 1.8;
-    color: rgba(226, 232, 240, 0.8);
+    color: var(--text-secondary);
     margin-bottom: 2rem;
 }
 
@@ -117,7 +118,7 @@
 }
 
 .gem-thumbnails .thumbnail:hover {
-    border-color: #10b981;
+    border-color: var(--accent-primary);
     transform: scale(1.05);
     filter: grayscale(0);
     box-shadow: 0 8px 30px rgba(16, 185, 129, 0.3);
@@ -130,23 +131,23 @@
     gap: 1rem;
     margin-bottom: 2.5rem;
     padding-bottom: 2.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--divider-color);
 }
 
 .gem-spec-card-full {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--card-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 1rem;
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
     transition: all 0.3s ease;
 }
 
 .gem-spec-card-full:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(168, 85, 247, 0.3);
-    box-shadow: 0 10px 40px rgba(168, 85, 247, 0.15);
+    background: var(--card-hover);
+    border-color: var(--accent-secondary);
+    box-shadow: var(--shadow-md);
 }
 
 /* Карточки характеристик (старые, для совместимости) */
@@ -156,38 +157,38 @@
     gap: 0.75rem;
     margin-bottom: 1.5rem;
     padding-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--divider-color);
 }
 
 .gem-spec-card {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--card-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 0.75rem;
     border-radius: 10px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
     transition: all 0.3s ease;
 }
 
 .gem-spec-card:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(168, 85, 247, 0.3);
-    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.15);
+    background: var(--card-hover);
+    border-color: var(--accent-secondary);
+    box-shadow: var(--shadow-md);
 }
 
 .spec-label {
     font-size: 0.65rem;
     font-weight: 600;
     text-transform: uppercase;
-    color: rgba(226, 232, 240, 0.5);
+    color: var(--text-muted);
     margin-bottom: 0.35rem;
     letter-spacing: 0.1em;
 }
 
 .spec-value {
     font-size: 0.85rem;
-    color: #e2e8f0;
-    font-weight: 400;
+    color: var(--text-primary);
+    font-weight: 500;
     line-height: 1.4;
 }
 
@@ -207,7 +208,7 @@
 .mohs-number {
     font-size: 10px;
     font-weight: 500;
-    color: rgba(226, 232, 240, 0.4);
+    color: var(--text-muted);
     min-width: 10px;
     flex-shrink: 0;
 }
@@ -215,16 +216,16 @@
 .mohs-bar {
     flex: 1;
     height: 6px;
-    background: linear-gradient(90deg, 
-        #F5F5F5 0%, 
-        #B0E0E6 11%, 
-        #48D1CC 22%, 
-        #90EE90 33%, 
-        #C4D300 44%, 
-        #FFD700 55%, 
-        #FF8C00 66%, 
-        #FF4500 77%, 
-        #800020 88%, 
+    background: linear-gradient(90deg,
+        #F5F5F5 0%,
+        #B0E0E6 11%,
+        #48D1CC 22%,
+        #90EE90 33%,
+        #C4D300 44%,
+        #FFD700 55%,
+        #FF8C00 66%,
+        #FF4500 77%,
+        #800020 88%,
         #121212 100%);
     border-radius: 3px;
     position: relative;
@@ -281,19 +282,19 @@
 }
 
 .gem-content-text {
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--card-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     padding: 2rem;
     border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
 }
 
 .gem-content-text p {
     margin-bottom: 1.5rem;
     font-size: 1rem;
     line-height: 1.8;
-    color: rgba(226, 232, 240, 0.85);
+    color: var(--text-secondary);
     margin-left: 0;
 }
 
@@ -302,7 +303,7 @@
 }
 
 .gem-content-text strong {
-    color: #10b981;
+    color: var(--accent-primary);
     font-weight: 600;
     font-size: 0.95rem;
     letter-spacing: 0.05em;
@@ -319,7 +320,7 @@
 .gem-section {
     margin-bottom: 3rem;
     padding-bottom: 2.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid var(--divider-color);
 }
 
 .gem-section:last-child {
@@ -329,7 +330,7 @@
 .section-title {
     font-size: 0.85rem;
     font-weight: 700;
-    color: rgba(226, 232, 240, 0.5);
+    color: var(--text-muted);
     text-transform: uppercase;
     letter-spacing: 0.2em;
     margin: 0 0 1.5rem 0;
@@ -338,7 +339,7 @@
 .section-content {
     font-size: 1.05rem;
     line-height: 1.9;
-    color: rgba(226, 232, 240, 0.8);
+    color: var(--text-secondary);
 }
 
 /* Навигация */
@@ -352,8 +353,8 @@
 .back-link, .next-link {
     display: inline-block;
     padding: 0.875rem 1.75rem;
-    background: rgba(168, 85, 247, 0.2);
-    color: #c084fc;
+    background: var(--badge-bg);
+    color: var(--accent-secondary);
     text-decoration: none;
     border-radius: 12px;
     font-weight: 600;
@@ -364,9 +365,9 @@
 
 .back-link:hover, .next-link:hover {
     background: rgba(168, 85, 247, 0.3);
-    border-color: #a855f7;
-    color: #e9d5ff;
-    box-shadow: 0 0 30px rgba(168, 85, 247, 0.3);
+    border-color: var(--accent-secondary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
 }
 

@@ -21,25 +21,25 @@ def get_db_connection(app: Flask) -> sqlite3.Connection:
 def search_gems(app: Flask, query: str, limit: int = 10) -> List[Dict]:
     """
     Выполняет поиск минералов по названию и описанию.
-    Использует префиксный поиск для коротких запросов (2-3 символа)
+    Использует префиксный поиск для коротких запросов (1-3 символа)
     и FTS5 для запросов 4+ символов.
-    
+
     Args:
         app: Flask application instance
         query: поисковый запрос
         limit: ограничение количества результатов
-        
+
     Returns:
         Список словарей с результатами поиска
     """
-    if len(query) < 2:
+    if len(query) < 1:
         return []
 
     conn = get_db_connection(app)
     cursor = conn.cursor()
-    
+
     results = []
-    
+
     try:
         # Префиксный поиск для коротких запросов
         if len(query) <= 3:
@@ -49,7 +49,7 @@ def search_gems(app: Flask, query: str, limit: int = 10) -> List[Dict]:
             results = _fts_search(cursor, query, limit)
     finally:
         conn.close()
-    
+
     return results
 
 
