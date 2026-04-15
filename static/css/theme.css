@@ -1,0 +1,270 @@
+/*
+ * Theme Variables - Light & Dark
+ * Gems Encyclopedia App v1.0.2
+ */
+
+/* === Тёмная тема (по умолчанию) === */
+:root {
+    /* Цвета фона */
+    --bg-primary: #0d0e10;
+    --bg-secondary: #1a1c1e;
+    --bg-gradient-start: #1a1c1e;
+    --bg-gradient-end: #0d0e10;
+    
+    /* Цвета текста */
+    --text-primary: #e2e8f0;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    
+    /* Акцентные цвета */
+    --accent-primary: #10b981;
+    --accent-hover: #34d399;
+    --accent-secondary: #a855f7;
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.03);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-strong: rgba(255, 255, 255, 0.05);
+    --glass-border-strong: rgba(255, 255, 255, 0.15);
+    
+    /* Шапка */
+    --header-bg: rgba(13, 14, 16, 0.8);
+    --header-border: rgba(255, 255, 255, 0.1);
+    
+    /* Карточки */
+    --card-bg: rgba(255, 255, 255, 0.03);
+    --card-border: rgba(255, 255, 255, 0.1);
+    --card-hover: rgba(255, 255, 255, 0.06);
+    
+    /* Поиск */
+    --search-bg: rgba(255, 255, 255, 0.05);
+    --search-border: rgba(255, 255, 255, 0.15);
+    --search-text: #e2e8f0;
+    --search-placeholder: #64748b;
+    
+    /* Ссылки */
+    --link-color: #10b981;
+    --link-hover: #34d399;
+    
+    /* Бейджи */
+    --badge-bg: rgba(16, 185, 129, 0.15);
+    --badge-text: #34d399;
+    
+    /* Разделители */
+    --divider-color: rgba(255, 255, 255, 0.1);
+    
+    /* Тени */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.4);
+    
+    /* Скроллбар */
+    --scrollbar-bg: rgba(255, 255, 255, 0.05);
+    --scrollbar-thumb: rgba(255, 255, 255, 0.2);
+    --scrollbar-thumb-hover: rgba(255, 255, 255, 0.3);
+}
+
+/* === Светлая тема === */
+[data-theme="light"] {
+    /* Цвета фона */
+    --bg-primary: #ffffff;
+    --bg-secondary: #f8f9fa;
+    --bg-gradient-start: #f0f2f5;
+    --bg-gradient-end: #ffffff;
+    
+    /* Цвета текста */
+    --text-primary: #1a1a1a;
+    --text-secondary: #555555;
+    --text-muted: #888888;
+    
+    /* Акцентные цвета */
+    --accent-primary: #059669;
+    --accent-hover: #10b981;
+    --accent-secondary: #7c3aed;
+    
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.7);
+    --glass-border: rgba(0, 0, 0, 0.1);
+    --glass-strong: rgba(255, 255, 255, 0.9);
+    --glass-border-strong: rgba(0, 0, 0, 0.15);
+    
+    /* Шапка */
+    --header-bg: rgba(255, 255, 255, 0.9);
+    --header-border: rgba(0, 0, 0, 0.1);
+    
+    /* Карточки */
+    --card-bg: rgba(255, 255, 255, 0.8);
+    --card-border: rgba(0, 0, 0, 0.1);
+    --card-hover: rgba(255, 255, 255, 1);
+    
+    /* Поиск */
+    --search-bg: rgba(255, 255, 255, 0.9);
+    --search-border: rgba(0, 0, 0, 0.15);
+    --search-text: #1a1a1a;
+    --search-placeholder: #888888;
+    
+    /* Ссылки */
+    --link-color: #059669;
+    --link-hover: #10b981;
+    
+    /* Бейджи */
+    --badge-bg: rgba(5, 150, 105, 0.1);
+    --badge-text: #059669;
+    
+    /* Разделители */
+    --divider-color: rgba(0, 0, 0, 0.1);
+    
+    /* Тени */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+    
+    /* Скроллбар */
+    --scrollbar-bg: rgba(0, 0, 0, 0.05);
+    --scrollbar-thumb: rgba(0, 0, 0, 0.2);
+    --scrollbar-thumb-hover: rgba(0, 0, 0, 0.3);
+}
+
+/* === Применение переменных === */
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    line-height: 1.6;
+    color: var(--text-primary);
+    background: radial-gradient(ellipse at top, var(--bg-gradient-start), var(--bg-gradient-end));
+    min-height: 100vh;
+    transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Шапка */
+.site-header {
+    background: var(--header-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--header-border);
+    padding: 1.25rem 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    transition: all 0.3s ease;
+}
+
+.site-header h1 a {
+    color: var(--text-primary);
+    transition: color 0.3s ease;
+}
+
+.site-header h1 a:hover {
+    color: var(--accent-primary);
+    text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+
+/* Поиск */
+#search-input {
+    background: var(--search-bg);
+    border: 1px solid var(--search-border);
+    color: var(--search-text);
+}
+
+#search-input::placeholder {
+    color: var(--search-placeholder);
+}
+
+/* Ссылки */
+a {
+    color: var(--link-color);
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: var(--link-hover);
+}
+
+/* Glassmorphism элементы */
+.glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+}
+
+.glass-strong {
+    background: var(--glass-strong);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border-strong);
+}
+
+/* Карточки */
+.gem-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    transition: all 0.3s ease;
+}
+
+.gem-card:hover {
+    background: var(--card-hover);
+    box-shadow: var(--shadow-md);
+}
+
+/* Футер */
+.site-footer {
+    background: var(--header-bg);
+    border-top: 1px solid var(--header-border);
+    color: var(--text-secondary);
+}
+
+/* Скроллбар */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--scrollbar-thumb);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--scrollbar-thumb-hover);
+}
+
+/* === Переключатель тем === */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--search-bg);
+    border: 1px solid var(--search-border);
+    border-radius: 9999px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: var(--text-primary);
+    font-size: 1.25rem;
+    line-height: 1;
+}
+
+.theme-toggle:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+}
+
+.theme-toggle-icon {
+    transition: transform 0.3s ease;
+}
+
+.theme-toggle:hover .theme-toggle-icon {
+    transform: rotate(15deg);
+}
+
+/* Адаптивность переключателя */
+@media (max-width: 768px) {
+    .theme-toggle {
+        padding: 0.4rem 0.8rem;
+        font-size: 1.1rem;
+    }
+}

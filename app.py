@@ -184,9 +184,18 @@ def admin_settings():
         app.config['DEBUG_SEARCH'] = debug_search
         flash('Настройки сохранены', 'success')
         return redirect(url_for('admin_settings'))
-    
+
     debug_search_enabled = session.get('debug_search_enabled', app.config.get('DEBUG_SEARCH', False))
     return render_template('admin_settings.html', debug_search_enabled=debug_search_enabled)
+
+@app.route('/api/theme', methods=['POST'])
+def save_theme():
+    """Сохранение темы пользователя в сессии"""
+    from flask import request
+    data = request.get_json()
+    theme = data.get('theme', 'dark')
+    session['theme'] = theme
+    return jsonify({'success': True, 'theme': theme})
 
 @app.route('/admin/create', methods=['GET', 'POST'])
 @admin_required

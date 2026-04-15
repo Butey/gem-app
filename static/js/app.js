@@ -1,7 +1,10 @@
 /**
- * Поиск с подсказками и алфавитная навигация
+ * Поиск с подсказками, алфавитная навигация и переключение тем
  */
 document.addEventListener('DOMContentLoaded', () => {
+    // === Переключение тем ===
+    initThemeToggle();
+    
     // === Выпадающие категории ===
     const categoryToggles = document.querySelectorAll('.category-toggle-btn');
 
@@ -169,4 +172,54 @@ if (typeof String.prototype.nl2br === 'undefined') {
     String.prototype.nl2br = function() {
         return this.replace(/\n/g, '<br>');
     };
+}
+
+/**
+ * Переключение светлой/тёмной темы
+ */
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = document.getElementById('theme-icon');
+    const html = document.documentElement;
+    
+    if (!themeToggle || !themeIcon) return;
+    
+    // Загрузка сохранённой темы
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme, themeIcon, html);
+    
+    // Обработчик клика
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = html.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        setTheme(newTheme, themeIcon, html);
+        
+        // Сохранение в localStorage
+        localStorage.setItem('theme', newTheme);
+        
+        // Отправка на сервер (для сохранения в сессии)
+        saveThemeToServer(newTheme);
+    });
+}
+
+function setTheme(theme, icon, html) {
+    if (theme === 'light') {
+        html.setAttribute('data-theme', 'light');
+        icon.textContent = '☀️';
+    } else {
+        html.removeAttribute('data-theme');
+        icon.textContent = '🌙';
+    }
+}
+
+function saveThemeToServer(theme) {
+    // Отправка темы на сервер для сохранения в сессии
+    fetch('/api/theme', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ theme: theme }),
+        credentials: 'same-origin'
+    }).catch(err => console.warn('Не удалось сохранить тему на сервере:', err));
 }

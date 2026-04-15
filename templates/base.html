@@ -15,10 +15,15 @@
     <header class="site-header">
         <div class="container">
             <h1><a href="{{ url_for('welcome') }}">Энциклопедия камней</a></h1>
-            <form class="search-form" id="global-search" role="search" action="{{ url_for('catalog') }}">
-                <input type="search" id="search-input" placeholder="Поиск по названию и описанию…" autocomplete="off">
-                <div id="search-suggestions" class="suggestions-dropdown"></div>
-            </form>
+            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+                <button class="theme-toggle" id="theme-toggle" title="Переключить тему" aria-label="Переключить тему">
+                    <span class="theme-toggle-icon" id="theme-icon">🌙</span>
+                </button>
+                <form class="search-form" id="global-search" role="search" action="{{ url_for('catalog') }}">
+                    <input type="search" id="search-input" placeholder="Поиск по названию и описанию…" autocomplete="off">
+                    <div id="search-suggestions" class="suggestions-dropdown"></div>
+                </form>
+            </div>
         </div>
     </header>
 
