@@ -109,7 +109,7 @@
         <div class="container">
             <p>Локальная энциклопедия минералов &copy; 2026</p>
             <p><a href="{{ url_for('admin_login') }}">Вход для администратора</a>
-            {% if config.get('DEBUG') %} | <a href="{{ url_for('debug.debug_search') }}">Отладка поиска</a>{% endif %}</p>
+            {% if config.get('DEBUG_SEARCH') or session.get('debug_search_enabled') %} | <a href="{{ url_for('debug.debug_search') }}">Отладка поиска</a>{% endif %}</p>
         </div>
     </footer>
 
