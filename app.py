@@ -7,7 +7,7 @@ Gems Encyclopedia App — Каталог минералов с поиском и
 from flask import Flask, render_template, request, jsonify, redirect, url_for, send_from_directory, abort, session, flash
 from werkzeug.utils import secure_filename
 from config import Config
-from models import db, Gem
+from models import db, Gem, User
 from database import init_app, create_tables
 from search import search_gems
 from debug import debug_bp
@@ -148,10 +148,13 @@ def admin_login():
         username = request.form.get('username')
         password = request.form.get('password')
         
-        if username == ADMIN_CREDENTIALS['username'] and password == ADMIN_CREDENTIALS['password']:
+        # Проверка через модель User
+        user = User.query.filter_by(username=username).first()
+        if user and user.check_password(password):
             session['admin_logged_in'] = True
+            session['admin_username'] = username
             session.permanent = True
-            flash('Вход выполнен', 'success')
+            flash(f'Вход выполнен, {username}', 'success')
             return redirect(url_for('admin_dashboard'))
         else:
             flash('Неверные учётные данные', 'error')
@@ -162,8 +165,9 @@ def admin_login():
 @app.route('/admin/logout')
 def admin_logout():
     session.pop('admin_logged_in', None)
+    session.pop('admin_username', None)
     flash('Выход выполнен', 'info')
-    return redirect(url_for('index'))
+    return redirect(url_for('welcome'))
 
 # === Админка: CRUD ===
 @app.route('/admin')
@@ -196,6 +200,54 @@ def save_theme():
     theme = data.get('theme', 'dark')
     session['theme'] = theme
     return jsonify({'success': True, 'theme': theme})
+
+@app.route('/admin/users')
+@admin_required
+def admin_users():
+    """Управление пользователями"""
+    users = User.query.order_by(User.username).all()
+    return render_template('admin_users.html', users=users)
+
+@app.route('/admin/users/create', methods=['POST'])
+@admin_required
+def admin_create_user():
+    """Создание нового пользователя"""
+    username = request.form.get('username', '').strip()
+    password = request.form.get('password', '')
+    
+    if not username or not password:
+        flash('Имя пользователя и пароль обязательны', 'error')
+        return redirect(url_for('admin_users'))
+    
+    existing = User.query.filter_by(username=username).first()
+    if existing:
+        flash('Пользователь с таким именем уже существует', 'error')
+        return redirect(url_for('admin_users'))
+    
+    user = User(username=username)
+    user.set_password(password)
+    db.session.add(user)
+    db.session.commit()
+    
+    flash(f'Пользователь {username} создан', 'success')
+    return redirect(url_for('admin_users'))
+
+@app.route('/admin/users/delete/<int:user_id>', methods=['POST'])
+@admin_required
+def admin_delete_user(user_id):
+    """Удаление пользователя"""
+    user = User.query.get_or_404(user_id)
+    
+    # Нельзя удалить последнего пользователя
+    if User.query.count() <= 1:
+        flash('Нельзя удалить последнего пользователя', 'error')
+        return redirect(url_for('admin_users'))
+    
+    db.session.delete(user)
+    db.session.commit()
+    
+    flash('Пользователь удалён', 'success')
+    return redirect(url_for('admin_users'))
 
 @app.route('/admin/create', methods=['GET', 'POST'])
 @admin_required
