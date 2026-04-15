@@ -12,9 +12,9 @@
     --bg-gradient-end: #0d0e10;
     
     /* Цвета текста */
-    --text-primary: #e2e8f0;
-    --text-secondary: #94a3b8;
-    --text-muted: #64748b;
+    --text-primary: #f1f5f9;
+    --text-secondary: #cbd5e1;
+    --text-muted: #94a3b8;
     
     /* Акцентные цвета */
     --accent-primary: #10b981;
@@ -32,9 +32,9 @@
     --header-border: rgba(255, 255, 255, 0.1);
     
     /* Карточки */
-    --card-bg: rgba(255, 255, 255, 0.03);
-    --card-border: rgba(255, 255, 255, 0.1);
-    --card-hover: rgba(255, 255, 255, 0.06);
+    --card-bg: rgba(30, 41, 59, 0.5);
+    --card-border: rgba(148, 163, 184, 0.2);
+    --card-hover: rgba(30, 41, 59, 0.7);
     
     /* Поиск */
     --search-bg: rgba(255, 255, 255, 0.05);
@@ -73,9 +73,9 @@
     --bg-gradient-end: #ffffff;
     
     /* Цвета текста */
-    --text-primary: #0f172a;
+    --text-primary: #000000;
     --text-secondary: #1e293b;
-    --text-muted: #475569;
+    --text-muted: #334155;
     
     /* Акцентные цвета */
     --accent-primary: #0369a1;
@@ -93,9 +93,9 @@
     --header-border: rgba(15, 23, 42, 0.2);
     
     /* Карточки */
-    --card-bg: rgba(255, 255, 255, 1);
-    --card-border: rgba(15, 23, 42, 0.2);
-    --card-hover: rgba(241, 245, 249, 1);
+    --card-bg: #ffffff;
+    --card-border: rgba(15, 23, 42, 0.25);
+    --card-hover: #f1f5f9;
     
     /* Поиск */
     --search-bg: rgba(255, 255, 255, 1);
@@ -141,21 +141,132 @@ body {
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--header-border);
-    padding: 1.25rem 0;
+    padding: 1rem 0;
     position: sticky;
     top: 0;
-    z-index: 100;
+    z-index: 1000;
     transition: all 0.3s ease;
+}
+
+.site-header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.site-header-left {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Переключатель тем слева */
+.theme-toggle {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+    padding: 0;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    box-shadow: var(--shadow-lg);
+    transform: scale(1.1);
+}
+
+.theme-toggle-icon {
+    font-size: 1.2rem;
+    line-height: 1;
+}
+
+.site-header h1 {
+    margin: 0;
+    text-align: center;
 }
 
 .site-header h1 a {
     color: var(--text-primary);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
     transition: color 0.3s ease;
+    display: block;
 }
 
 .site-header h1 a:hover {
     color: var(--accent-primary);
     text-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+}
+
+.site-header-right {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    flex-shrink: 0;
+}
+
+/* Поиск в шапке */
+.site-header .search-form {
+    position: relative;
+    width: 320px !important;
+    max-width: none !important;
+    flex-shrink: 0;
+}
+
+.site-header #search-input {
+    width: 100% !important;
+    padding: 0.6rem 1.25rem;
+    border: 1px solid var(--search-border);
+    border-radius: 9999px;
+    font-size: 0.95rem;
+    background: var(--search-bg);
+    color: var(--search-text);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.site-header #search-input::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+/* Кнопка входа в админку */
+.admin-login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.admin-login-btn:hover {
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: var(--shadow-md);
+    transform: scale(1.05);
 }
 
 /* Поиск */
@@ -232,39 +343,39 @@ a:hover {
     background: var(--scrollbar-thumb-hover);
 }
 
-/* === Переключатель тем === */
-.theme-toggle {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: var(--search-bg);
-    border: 1px solid var(--search-border);
-    border-radius: 9999px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    color: var(--text-primary);
-    font-size: 1.25rem;
-    line-height: 1;
-}
-
-.theme-toggle:hover {
-    background: var(--card-hover);
-    border-color: var(--accent-primary);
-}
-
-.theme-toggle-icon {
-    transition: transform 0.3s ease;
-}
-
-.theme-toggle:hover .theme-toggle-icon {
-    transform: rotate(15deg);
-}
-
-/* Адаптивность переключателя */
+/* Адаптивность переключателя тем */
 @media (max-width: 768px) {
+    .site-header-container {
+        padding: 0 1rem;
+    }
+    
+    .site-header-left {
+        order: 1;
+    }
+    
+    .site-header h1 {
+        order: 2;
+        flex-grow: 1;
+        text-align: center;
+    }
+    
+    .site-header-right {
+        order: 3;
+        width: 100%;
+        justify-content: flex-end;
+    }
+    
     .theme-toggle {
-        padding: 0.4rem 0.8rem;
+        width: 36px;
+        height: 36px;
+    }
+    
+    .theme-toggle-icon {
         font-size: 1.1rem;
+    }
+    
+    .admin-login-btn {
+        width: 32px;
+        height: 32px;
     }
 }

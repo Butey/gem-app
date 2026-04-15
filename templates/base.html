@@ -13,16 +13,24 @@
 </head>
 <body>
     <header class="site-header">
-        <div class="container">
-            <h1><a href="{{ url_for('welcome') }}">Энциклопедия камней</a></h1>
-            <div style="display: flex; align-items: center; gap: 1rem; flex-wrap: wrap;">
+        <div class="site-header-container">
+            <div class="site-header-left">
                 <button class="theme-toggle" id="theme-toggle" title="Переключить тему" aria-label="Переключить тему">
                     <span class="theme-toggle-icon" id="theme-icon">🌙</span>
                 </button>
+            </div>
+            <h1><a href="{{ url_for('welcome') }}">Энциклопедия камней</a></h1>
+            <div class="site-header-right">
                 <form class="search-form" id="global-search" role="search" action="{{ url_for('catalog') }}">
                     <input type="search" id="search-input" placeholder="Поиск по названию и описанию…" autocomplete="off">
                     <div id="search-suggestions" class="suggestions-dropdown"></div>
                 </form>
+                <a href="{{ url_for('admin_login') }}" class="admin-login-btn" title="Вход в админ-панель" aria-label="Вход в админ-панель">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </a>
             </div>
         </div>
     </header>
@@ -113,8 +121,9 @@
     <footer class="site-footer">
         <div class="container">
             <p>Локальная энциклопедия минералов &copy; 2026</p>
-            <p><a href="{{ url_for('admin_login') }}">Вход для администратора</a>
-            {% if config.get('DEBUG_SEARCH') or session.get('debug_search_enabled') %} | <a href="{{ url_for('debug.debug_search') }}">Отладка поиска</a>{% endif %}</p>
+            {% if config.get('DEBUG_SEARCH') or session.get('debug_search_enabled') %}
+            <p><a href="{{ url_for('debug.debug_search') }}">Отладка поиска</a></p>
+            {% endif %}
         </div>
     </footer>
 
