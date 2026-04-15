@@ -113,9 +113,28 @@ def catalog():
     if letter:
         query = query.filter(Gem.name.ilike(f'{letter}%'))
 
-    # Поиск по названию
+    # Поиск по названию и описанию
     if search_query:
-        query = query.filter(Gem.name.ilike(f'%{search_query}%'))
+        # Для коротких запросов (≤3 символов) используем префиксный поиск
+        if len(search_query) <= 3:
+            # SQLite не поддерживает LOWER/UPPER для кириллицы, поэтому ищем по обоим регистрам
+            query = query.filter(
+                (Gem.name.like(f'{search_query}%')) |
+                (Gem.name.like(f'{search_query.upper()}%')) |
+                (Gem.name.like(f'{search_query.capitalize()}%')) |
+                (Gem.description.like(f'%{search_query}%')) |
+                (Gem.description.like(f'%{search_query.upper()}%')) |
+                (Gem.description.like(f'%{search_query.capitalize()}%'))
+            )
+        # Для длинных запросов используем FTS5 через search.py
+        else:
+            # Получаем ID минералов через search.py
+            fts_results = search_gems(app, search_query.lower(), limit=100)
+            gem_ids = [r['id'] for r in fts_results]
+            if gem_ids:
+                query = query.filter(Gem.id.in_(gem_ids))
+            else:
+                query = query.filter(Gem.id == -1)  # Ничего не найдено
 
     # Сортировка по названию
     gems = query.order_by(Gem.name).paginate(page=page, per_page=per_page, error_out=False)

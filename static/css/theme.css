@@ -148,6 +148,11 @@ body {
     transition: all 0.3s ease;
 }
 
+/* Скрыть шапку на главной странице */
+body:has(.welcome-hero) .site-header {
+    display: none;
+}
+
 .site-header-container {
     max-width: 1200px;
     margin: 0 auto;

@@ -11,6 +11,26 @@
     <p class="welcome-subtitle">Полная энциклопедия минералов, драгоценных и поделочных камней</p>
 </section>
 
+<!-- Переключатель темы, поиск и вход -->
+<section class="welcome-actions">
+    <button class="theme-toggle-main" id="theme-toggle-main" title="Переключить тему" aria-label="Переключить тему">
+        <span class="theme-toggle-icon-main" id="theme-icon-main">🌙</span>
+    </button>
+    <button class="search-modal-trigger-main" id="search-modal-trigger-main" title="Поиск (Ctrl+K)" aria-label="Открыть поиск">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+        </svg>
+        <span class="search-trigger-text">Поиск минералов…</span>
+    </button>
+    <a href="{{ url_for('admin_login') }}" class="admin-login-btn-main" title="Вход в админ-панель">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+        </svg>
+    </a>
+</section>
+
 <!-- Основные категории -->
 <section class="main-categories welcome-categories">
     <div class="main-category-block">
@@ -41,11 +61,49 @@
     </div>
 </section>
 
-<!-- Поиск -->
-<section class="welcome-search">
-    <h2 class="welcome-search-title">Найти минерал</h2>
-    <form class="search-form welcome-search-form" id="welcome-search" role="search" action="{{ url_for('catalog') }}">
-        <input type="search" id="welcome-search-input" name="q" placeholder="Введите название минерала…" autocomplete="off">
-    </form>
-</section>
+<script>
+// Переключение темы на главной странице
+document.addEventListener('DOMContentLoaded', function() {
+    const themeToggle = document.getElementById('theme-toggle-main');
+    const themeIcon = document.getElementById('theme-icon-main');
+    const html = document.documentElement;
+    
+    if (!themeToggle || !themeIcon) return;
+    
+    // Загрузка сохранённой темы
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    if (savedTheme === 'light') {
+        html.setAttribute('data-theme', 'light');
+        themeIcon.textContent = '☀️';
+    }
+    
+    themeToggle.addEventListener('click', function() {
+        const currentTheme = html.getAttribute('data-theme') || 'dark';
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        if (newTheme === 'light') {
+            html.setAttribute('data-theme', 'light');
+            themeIcon.textContent = '☀️';
+        } else {
+            html.removeAttribute('data-theme');
+            themeIcon.textContent = '🌙';
+        }
+        
+        localStorage.setItem('theme', newTheme);
+    });
+    
+    // Триггер для открытия Search Modal
+    const searchTrigger = document.getElementById('search-modal-trigger-main');
+    if (searchTrigger) {
+        searchTrigger.addEventListener('click', function() {
+            const modalOverlay = document.getElementById('search-modal-overlay');
+            const modalInput = document.getElementById('modal-search-input');
+            if (modalOverlay) {
+                modalOverlay.classList.add('active');
+                setTimeout(() => modalInput?.focus(), 100);
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

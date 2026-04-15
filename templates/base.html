@@ -21,10 +21,14 @@
             </div>
             <h1><a href="{{ url_for('welcome') }}">Энциклопедия камней</a></h1>
             <div class="site-header-right">
-                <form class="search-form" id="global-search" role="search" action="{{ url_for('catalog') }}">
-                    <input type="search" id="search-input" placeholder="Поиск по названию и описанию…" autocomplete="off">
-                    <div id="search-suggestions" class="suggestions-dropdown"></div>
-                </form>
+                <button class="search-modal-trigger" id="search-modal-trigger" title="Поиск (Ctrl+K)" aria-label="Открыть поиск">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.3-4.3"></path>
+                    </svg>
+                    <span class="search-trigger-text">Поиск</span>
+                    <kbd class="search-hotkey">Ctrl+K</kbd>
+                </button>
                 <a href="{{ url_for('admin_login') }}" class="admin-login-btn" title="Вход в админ-панель" aria-label="Вход в админ-панель">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -117,6 +121,132 @@
         
         {% block content %}{% endblock %}
     </main>
+
+    <!-- Search Modal (Next.js style) -->
+    <div class="search-modal-overlay" id="search-modal-overlay">
+        <div class="search-modal" id="search-modal">
+            <div class="search-modal-header">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="search-modal-icon">
+                    <circle cx="11" cy="11" r="8"></circle>
+                    <path d="m21 21-4.3-4.3"></path>
+                </svg>
+                <input type="search" id="modal-search-input" class="search-modal-input" placeholder="Поиск минералов…" autocomplete="off">
+                <kbd class="modal-esc-hint">ESC</kbd>
+            </div>
+            
+            <!-- Search Results -->
+            <div class="search-modal-results" id="search-modal-results">
+                <!-- Popular Minerals -->
+                <div class="search-popular-minerals" id="search-popular-minerals">
+                    <div class="popular-minerals-list">
+                        <a href="/gem/malahit" class="popular-mineral-item" data-slug="malahit">
+                            <img src="/uploads/malahit.jpg" alt="Малахит" class="popular-mineral-thumb" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <span class="popular-mineral-icon" style="display:none">💎</span>
+                            <span class="popular-mineral-name">Малахит</span>
+                            <div class="mineral-hover-card">
+                                <img src="/uploads/malahit.jpg" alt="Малахит" class="hover-card-image" onerror="this.src='/static/img/placeholder.png'">
+                                <div class="hover-card-content">
+                                    <div class="hover-card-name">Малахит</div>
+                                    <div class="hover-card-category">Поделочный</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/gem/granat" class="popular-mineral-item" data-slug="granat">
+                            <img src="/uploads/гранат.jpg" alt="Гранат" class="popular-mineral-thumb" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <span class="popular-mineral-icon" style="display:none">🔴</span>
+                            <span class="popular-mineral-name">Гранат</span>
+                            <div class="mineral-hover-card">
+                                <img src="/uploads/гранат.jpg" alt="Гранат" class="hover-card-image" onerror="this.src='/static/img/placeholder.png'">
+                                <div class="hover-card-content">
+                                    <div class="hover-card-name">Гранат</div>
+                                    <div class="hover-card-category">Полудрагоценный</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/gem/zhemchug" class="popular-mineral-item" data-slug="zhemchug">
+                            <img src="/uploads/zhemchug.jpg" alt="Жемчуг" class="popular-mineral-thumb" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <span class="popular-mineral-icon" style="display:none">🦪</span>
+                            <span class="popular-mineral-name">Жемчуг</span>
+                            <div class="mineral-hover-card">
+                                <img src="/uploads/zhemchug.jpg" alt="Жемчуг" class="hover-card-image" onerror="this.src='/static/img/placeholder.png'">
+                                <div class="hover-card-content">
+                                    <div class="hover-card-name">Жемчуг</div>
+                                    <div class="hover-card-category">Органический</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/gem/yantar" class="popular-mineral-item" data-slug="yantar">
+                            <img src="/uploads/yantar.jpg" alt="Янтарь" class="popular-mineral-thumb" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <span class="popular-mineral-icon" style="display:none">🟡</span>
+                            <span class="popular-mineral-name">Янтарь</span>
+                            <div class="mineral-hover-card">
+                                <img src="/uploads/yantar.jpg" alt="Янтарь" class="hover-card-image" onerror="this.src='/static/img/placeholder.png'">
+                                <div class="hover-card-content">
+                                    <div class="hover-card-name">Янтарь</div>
+                                    <div class="hover-card-category">Органический</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/gem/biryuza" class="popular-mineral-item" data-slug="biryuza">
+                            <img src="/uploads/biryuza.jpg" alt="Бирюза" class="popular-mineral-thumb" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <span class="popular-mineral-icon" style="display:none">🔷</span>
+                            <span class="popular-mineral-name">Бирюза</span>
+                            <div class="mineral-hover-card">
+                                <img src="/uploads/biryuza.jpg" alt="Бирюза" class="hover-card-image" onerror="this.src='/static/img/placeholder.png'">
+                                <div class="hover-card-content">
+                                    <div class="hover-card-name">Бирюза</div>
+                                    <div class="hover-card-category">Поделочный</div>
+                                </div>
+                            </div>
+                        </a>
+                        <a href="/gem/agat" class="popular-mineral-item" data-slug="agat">
+                            <img src="/uploads/agat.jpg" alt="Агат" class="popular-mineral-thumb" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                            <span class="popular-mineral-icon" style="display:none">⚪</span>
+                            <span class="popular-mineral-name">Агат</span>
+                            <div class="mineral-hover-card">
+                                <img src="/uploads/agat.jpg" alt="Агат" class="hover-card-image" onerror="this.src='/static/img/placeholder.png'">
+                                <div class="hover-card-content">
+                                    <div class="hover-card-name">Агат</div>
+                                    <div class="hover-card-category">Поделочный</div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Categories -->
+                <div class="search-quick-cats" id="search-quick-cats">
+                    <div class="quick-cat-label">Категории:</div>
+                    <div class="quick-cat-list">
+                        <a href="/catalog?category=руды металлов" class="quick-cat-item">
+                            <img src="/uploads/zhelezo.jpg" alt="Руды металлов" class="quick-cat-thumb" onerror="this.style.display='none'">
+                            <span class="quick-cat-name">Руды металлов</span>
+                        </a>
+                        <a href="/catalog?category=нерудные" class="quick-cat-item">
+                            <img src="/uploads/izvestnyak.jpg" alt="Нерудные" class="quick-cat-thumb" onerror="this.style.display='none'">
+                            <span class="quick-cat-name">Нерудные</span>
+                        </a>
+                        <a href="/catalog?category=строительные" class="quick-cat-item">
+                            <img src="/uploads/mramor.jpg" alt="Строительные" class="quick-cat-thumb" onerror="this.style.display='none'">
+                            <span class="quick-cat-name">Строительные</span>
+                        </a>
+                        <a href="/catalog?category=полудрагоценный" class="quick-cat-item">
+                            <img src="/uploads/topaz.jpg" alt="Полудрагоценные" class="quick-cat-thumb" onerror="this.style.display='none'">
+                            <span class="quick-cat-name">Полудрагоценные</span>
+                        </a>
+                        <a href="/catalog?category=поделочный" class="quick-cat-item">
+                            <img src="/uploads/malahit.jpg" alt="Поделочные" class="quick-cat-thumb" onerror="this.style.display='none'">
+                            <span class="quick-cat-name">Поделочные</span>
+                        </a>
+                        <a href="/catalog?category=органический" class="quick-cat-item">
+                            <img src="/uploads/zhemchug.jpg" alt="Органические" class="quick-cat-thumb" onerror="this.style.display='none'">
+                            <span class="quick-cat-name">Органические</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <footer class="site-footer">
         <div class="container">
