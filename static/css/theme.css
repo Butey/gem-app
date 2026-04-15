@@ -68,61 +68,61 @@
 [data-theme="light"] {
     /* Цвета фона */
     --bg-primary: #ffffff;
-    --bg-secondary: #f1f5f9;
-    --bg-gradient-start: #e2e8f0;
+    --bg-secondary: #e2e8f0;
+    --bg-gradient-start: #cbd5e1;
     --bg-gradient-end: #ffffff;
     
     /* Цвета текста */
     --text-primary: #0f172a;
-    --text-secondary: #334155;
-    --text-muted: #64748b;
+    --text-secondary: #1e293b;
+    --text-muted: #475569;
     
     /* Акцентные цвета */
-    --accent-primary: #047857;
-    --accent-hover: #059669;
+    --accent-primary: #0369a1;
+    --accent-hover: #0284c7;
     --accent-secondary: #6d28d9;
     
     /* Glassmorphism */
-    --glass-bg: rgba(255, 255, 255, 0.85);
-    --glass-border: rgba(148, 163, 184, 0.3);
-    --glass-strong: rgba(255, 255, 255, 0.95);
-    --glass-border-strong: rgba(148, 163, 184, 0.4);
+    --glass-bg: rgba(255, 255, 255, 0.95);
+    --glass-border: rgba(15, 23, 42, 0.2);
+    --glass-strong: rgba(255, 255, 255, 1);
+    --glass-border-strong: rgba(15, 23, 42, 0.3);
     
     /* Шапка */
-    --header-bg: rgba(255, 255, 255, 0.95);
-    --header-border: rgba(148, 163, 184, 0.3);
+    --header-bg: rgba(255, 255, 255, 1);
+    --header-border: rgba(15, 23, 42, 0.2);
     
     /* Карточки */
-    --card-bg: rgba(255, 255, 255, 0.9);
-    --card-border: rgba(148, 163, 184, 0.3);
-    --card-hover: rgba(255, 255, 255, 1);
+    --card-bg: rgba(255, 255, 255, 1);
+    --card-border: rgba(15, 23, 42, 0.2);
+    --card-hover: rgba(241, 245, 249, 1);
     
     /* Поиск */
     --search-bg: rgba(255, 255, 255, 1);
-    --search-border: rgba(148, 163, 184, 0.4);
+    --search-border: rgba(15, 23, 42, 0.3);
     --search-text: #0f172a;
-    --search-placeholder: #94a3b8;
+    --search-placeholder: #64748b;
     
     /* Ссылки */
-    --link-color: #047857;
-    --link-hover: #059669;
+    --link-color: #0369a1;
+    --link-hover: #0284c7;
     
     /* Бейджи */
-    --badge-bg: rgba(4, 120, 87, 0.15);
-    --badge-text: #047857;
+    --badge-bg: rgba(3, 105, 161, 0.15);
+    --badge-text: #0369a1;
     
     /* Разделители */
-    --divider-color: rgba(148, 163, 184, 0.3);
+    --divider-color: rgba(15, 23, 42, 0.15);
     
     /* Тени */
-    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.08);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.12);
-    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.15);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.16);
+    --shadow-lg: 0 10px 40px rgba(0, 0, 0, 0.2);
     
     /* Скроллбар */
-    --scrollbar-bg: rgba(148, 163, 184, 0.2);
-    --scrollbar-thumb: rgba(148, 163, 184, 0.5);
-    --scrollbar-thumb-hover: rgba(148, 163, 184, 0.7);
+    --scrollbar-bg: rgba(148, 163, 184, 0.3);
+    --scrollbar-thumb: rgba(71, 85, 105, 0.6);
+    --scrollbar-thumb-hover: rgba(71, 85, 105, 0.8);
 }
 
 /* === Применение переменных === */

@@ -239,10 +239,10 @@
     gap: 6px;
     margin: 2rem 0;
     padding: 1.5rem;
-    background: rgba(255, 255, 255, 0.02);
+    background: var(--glass-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--glass-border);
     border-radius: 16px;
 }
 
@@ -253,30 +253,29 @@
     min-width: 32px;
     height: 40px;
     padding: 0 10px;
-    color: #10b981;
+    color: var(--accent-primary);
     text-decoration: none;
     font-size: 14px;
     font-weight: 600;
     border-radius: 8px;
     transition: all 0.3s ease;
-    background: rgba(16, 185, 129, 0.1);
-    border: 1px solid rgba(16, 185, 129, 0.2);
+    background: var(--badge-bg);
+    border: 1px solid var(--accent-primary);
 }
 
 .alphabet-letter:hover {
-    background: rgba(16, 185, 129, 0.25);
-    border-color: #10b981;
-    color: #6ee7b7;
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4),
-                0 0 40px rgba(16, 185, 129, 0.2);
+    background: var(--card-hover);
+    border-color: var(--accent-primary);
+    color: var(--accent-hover);
+    box-shadow: var(--shadow-md);
     transform: translateY(-2px);
 }
 
 .alphabet-letter-active {
     background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(16, 185, 129, 0.2));
-    border-color: #10b981;
-    color: #6ee7b7;
-    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    border-color: var(--accent-primary);
+    color: var(--text-primary);
+    box-shadow: var(--shadow-md);
 }
 
 .alphabet-letter-empty {
@@ -286,7 +285,7 @@
     min-width: 32px;
     height: 40px;
     padding: 0 10px;
-    color: rgba(226, 232, 240, 0.2);
+    color: var(--text-muted);
     font-size: 14px;
     font-weight: 500;
     cursor: default;

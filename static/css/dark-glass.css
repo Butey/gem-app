@@ -185,28 +185,28 @@
 }
 
 .main-category-block {
-    background: rgba(255, 255, 255, 0.03);
+    background: var(--card-bg);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    border: 1px solid var(--card-border);
     border-radius: 20px;
     padding: 1.75rem;
     transition: all 0.3s ease;
 }
 
 .main-category-block:hover {
-    background: rgba(255, 255, 255, 0.05);
-    border-color: rgba(168, 85, 247, 0.3);
-    box-shadow: 0 20px 60px rgba(168, 85, 247, 0.15);
+    background: var(--card-hover);
+    border-color: var(--accent-secondary);
+    box-shadow: var(--shadow-lg);
 }
 
 .main-category-title {
     font-size: 1.25rem;
-    color: #e2e8f0;
+    color: var(--text-primary);
     margin-bottom: 1.25rem;
     font-weight: 600;
     padding-bottom: 1rem;
-    border-bottom: 2px solid rgba(168, 85, 247, 0.3);
+    border-bottom: 2px solid var(--accent-secondary);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -229,7 +229,7 @@
 }
 
 .category-toggle-btn:hover {
-    color: #a855f7;
+    color: var(--accent-secondary);
 }
 
 .toggle-arrow::after {
@@ -238,7 +238,7 @@
     display: block;
     transform: rotate(-90deg);
     transition: transform 0.3s ease;
-    color: #a855f7;
+    color: var(--accent-secondary);
 }
 
 [aria-expanded="true"] .toggle-arrow::after {
@@ -263,27 +263,28 @@
 .sub-cat-btn {
     display: block;
     padding: 1rem 1.5rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
     border-radius: 12px;
     text-decoration: none;
-    color: rgba(226, 232, 240, 0.8);
+    color: var(--text-primary);
     font-size: 0.95rem;
     text-align: center;
     transition: all 0.3s ease;
+    font-weight: 500;
 }
 
 .sub-cat-btn:hover {
-    background: rgba(168, 85, 247, 0.15);
-    border-color: #a855f7;
-    color: #c084fc;
+    background: var(--badge-bg);
+    border-color: var(--accent-secondary);
+    color: var(--accent-secondary);
     transform: translateX(8px);
-    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.2);
+    box-shadow: var(--shadow-md);
 }
 
 .sub-cat-btn.active {
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(168, 85, 247, 0.2));
-    border-color: #a855f7;
+    background: linear-gradient(135deg, rgba(109, 40, 217, 0.4), rgba(109, 40, 217, 0.2));
+    border-color: var(--accent-secondary);
     color: #e9d5ff;
-    box-shadow: 0 8px 30px rgba(168, 85, 247, 0.3);
+    box-shadow: var(--shadow-md);
 }
