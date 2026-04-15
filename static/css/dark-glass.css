@@ -9,6 +9,173 @@
 /* === Базовые стили === */
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* === Поиск === */
+.search-form {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+}
+
+#search-input {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid var(--search-border);
+    border-radius: 9999px;
+    font-size: 0.95rem;
+    font-family: inherit;
+    background: var(--search-bg);
+    color: var(--search-text);
+    transition: all 0.3s ease;
+}
+
+#search-input::placeholder {
+    color: var(--search-placeholder);
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    background: var(--card-hover);
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1),
+                0 0 20px rgba(16, 185, 129, 0.2);
+}
+
+.suggestions-dropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    right: 0;
+    background: var(--bg-secondary);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    max-height: 400px;
+    overflow-y: auto;
+    display: none;
+    z-index: 200;
+    box-shadow: var(--shadow-lg);
+}
+
+.suggestions-dropdown.active { display: block; }
+
+.suggestion-item {
+    padding: 1rem 1.25rem;
+    border-bottom: 1px solid var(--divider-color);
+    cursor: pointer;
+    display: flex;
+    gap: 1rem;
+    align-items: flex-start;
+    transition: all 0.3s ease;
+}
+
+.suggestion-item:last-child {
+    border-bottom: none;
+    border-radius: 0 0 16px 16px;
+}
+
+.suggestion-item:hover, .suggestion-item.active {
+    background: var(--card-hover);
+}
+
+.suggestion-thumb {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    border-radius: 8px;
+    background: var(--glass-bg);
+    flex-shrink: 0;
+    border: 1px solid var(--glass-border);
+}
+
+.suggestion-content { flex: 1; min-width: 0; }
+
+.suggestion-name {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+    color: var(--text-primary);
+}
+
+.suggestion-snippet {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.suggestion-snippet mark {
+    background: rgba(168, 85, 247, 0.3);
+    color: #c084fc;
+    padding: 0 4px;
+    border-radius: 3px;
+}
+
+.suggestion-category {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+}
+
+/* === Фильтры категорий === */
+.category-filter {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+    padding-bottom: 0.5rem;
+}
+
+.category-filter::-webkit-scrollbar {
+    height: 4px;
+}
+
+.category-filter::-webkit-scrollbar-track {
+    background: var(--scrollbar-bg);
+    border-radius: 2px;
+}
+
+.category-filter::-webkit-scrollbar-thumb {
+    background: var(--accent-primary);
+    border-radius: 2px;
+}
+
+.cat-btn {
+    padding: 0.5rem 1.25rem;
+    text-decoration: none;
+    color: var(--text-primary);
+    border: 1px solid var(--glass-border);
+    border-radius: 9999px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: var(--glass-bg);
+    transition: all 0.3s ease;
+    white-space: nowrap;
+}
+
+.cat-btn:hover {
+    background: var(--badge-bg);
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+}
+
+.cat-btn.active {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.4), rgba(16, 185, 129, 0.2));
+    border-color: var(--accent-primary);
+    color: var(--accent-primary);
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+}
+
 /* === Основные категории === */
 .main-categories {
     display: grid;
