@@ -1,17 +1,18 @@
 #!/bin/bash
 #
-# install_gems_app.sh — Автоматическая установка "Энциклопедия камней" на новый сервер
-# Версия: 1.0.1
+# setup_from_files.sh — Развертывание приложения из скопированных файлов
+# Использование: ./setup_from_files.sh [путь_к_директории]
+# Пример: ./setup_from_files.sh /opt/gem-app
 #
-# Использование: ./install_gems_app.sh [путь_к_архиву]
-# Пример: ./install_gems_app.sh /opt/gems_app_v1.0.1.tar.gz
+# Скрипт создаёт virtualenv, устанавливает зависимости, инициализирует БД
+# и настраивает systemd-службу для уже скопированных файлов приложения.
 #
 
 set -e  # Останавливаемся при ошибке
 
 # === Настройки ===
 APP_NAME="gems_app"
-APP_DIR="/opt/gem-app"
+APP_DIR="${1:-/opt/gem-app}"
 VENV_DIR="$APP_DIR/venv"
 USER="root"
 GROUP="root"
@@ -20,7 +21,8 @@ HOST="0.0.0.0"
 LOG_FILE="$APP_DIR/logs/app.log"
 PID_FILE="$APP_DIR/app.pid"
 SYSTEMD_SERVICE="/etc/systemd/system/$APP_NAME.service"
-ADMIN_PASSWORD="museum2026"
+ADMIN_USERNAME="${ADMIN_USERNAME:-admin}"
+ADMIN_PASSWORD="${ADMIN_PASSWORD:-museum2026}"
 
 # Цвета для вывода
 RED='\033[0;31m'
@@ -42,99 +44,82 @@ check_root() {
     fi
 }
 
-check_archive() {
-    if [[ -z "$1" ]]; then
-        log_error "Не указан путь к архиву"
-        echo "Использование: $0 <путь_к_архиву>"
-        echo "Пример: $0 /opt/gems_app_v1.0.0-beta.tar.gz"
+check_app_dir() {
+    if [[ ! -d "$APP_DIR" ]]; then
+        log_error "Директория не найдена: $APP_DIR"
         exit 1
     fi
-    
-    if [[ ! -f "$1" ]]; then
-        log_error "Архив не найден: $1"
-        exit 1
-    fi
-    
-    ARCHIVE_PATH="$1"
-    log_info "Архив найден: $ARCHIVE_PATH"
-}
 
-create_user() {
-    log_step "Создание пользователя $USER..."
-    
-    if ! id "$USER" &>/dev/null; then
-        useradd -r -s /bin/bash -d "$APP_DIR" -m "$USER"
-        log_info "Пользователь $USER создан"
-    else
-        log_warn "Пользователь $USER уже существует"
+    if [[ ! -f "$APP_DIR/app.py" ]]; then
+        log_error "app.py не найден в $APP_DIR"
+        exit 1
     fi
+
+    log_info "Директория приложения проверена: $APP_DIR"
 }
 
 create_dirs() {
     log_step "Создание директорий..."
-    
-    mkdir -p "$APP_DIR"/{static/{css,js},templates,uploads,logs,backups,temp}
-    
-    chown -R "$USER:$GROUP" "$APP_DIR"
+
+    mkdir -p "$APP_DIR"/{static/{css,js,img},templates,uploads,logs,backups}
+
     chmod 755 "$APP_DIR"
     chmod 700 "$APP_DIR/uploads" "$APP_DIR/logs"
-    
-    log_info "Директории созданы"
-}
 
-extract_archive() {
-    log_step "Распаковка архива..."
-
-    tar -xzf "$ARCHIVE_PATH" -C "$APP_DIR" --exclude='venv' --exclude='__pycache__' --exclude='.cache' --exclude='logs/*.log'
-    
-    # Если передан полный deploy архив, ищем бэкап внутри
-    if [[ -f "$APP_DIR/backups/gems_app_v1.0.1_*.tar.gz" ]]; then
-        BACKUP_FILE=$(ls "$APP_DIR/backups/gems_app_v1.0.1_"*.tar.gz 2>/dev/null | head -1)
-        if [[ -n "$BACKUP_FILE" ]]; then
-            tar -xzf "$BACKUP_FILE" -C "$APP_DIR" --exclude='venv' --exclude='__pycache__'
-        fi
-    fi
-    
-    chown -R "$USER:$GROUP" "$APP_DIR"
-    
-    log_info "Файлы распакованы"
+    log_info "Директории созданы/проверены"
 }
 
 setup_venv() {
     log_step "Настройка Python virtualenv..."
-    
-    if [[ ! -f "$VENV_DIR/bin/activate" ]]; then
-        python3 -m venv "$VENV_DIR"
+
+    if [[ -d "$VENV_DIR" ]]; then
+        log_warn "Virtualenv уже существует, удаляю..."
+        rm -rf "$VENV_DIR"
     fi
-    
+
+    python3 -m venv "$VENV_DIR"
+
     source "$VENV_DIR/bin/activate"
     pip install --upgrade pip
-    
+
     if [[ -f "$APP_DIR/requirements.txt" ]]; then
         pip install -r "$APP_DIR/requirements.txt"
     else
-        pip install flask flask-sqlalchemy gunicorn
+        log_warn "requirements.txt не найден, устанавливаю базовые пакеты"
+        pip install flask flask-sqlalchemy gunicorn werkzeug
     fi
-    
+
+    # Добавляем gunicorn если его нет
+    pip show gunicorn &>/dev/null || pip install gunicorn
+
     deactivate
-    log_info "✓ Virtualenv готов"
+    log_info "✓ Virtualenv создан"
 }
 
 init_database() {
     log_step "Инициализация базы данных..."
-    
+
     source "$VENV_DIR/bin/activate"
     cd "$APP_DIR"
-    
-    "$VENV_DIR/bin/python" init_db.py
-    
+
+    # Создаём таблицы через database.py
+    "$VENV_DIR/bin/python" -c "
+from app import app
+from database import create_tables
+import os
+
+os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+create_tables(app)
+print('✓ База данных создана')
+"
+
     deactivate
-    log_info "✓ База данных создана"
+    log_info "✓ База данных инициализирована"
 }
 
 create_systemd_service() {
     log_step "Создание systemd service..."
-    
+
     cat > "$SYSTEMD_SERVICE" << EOF
 [Unit]
 Description=Gems Encyclopedia App
@@ -147,10 +132,14 @@ Group=$GROUP
 WorkingDirectory=$APP_DIR
 Environment="PATH=$VENV_DIR/bin"
 Environment="FLASK_ENV=production"
+Environment="ADMIN_USERNAME=$ADMIN_USERNAME"
+Environment="ADMIN_PASSWORD=$ADMIN_PASSWORD"
 ExecStart=$VENV_DIR/bin/gunicorn --workers 4 --bind $HOST:$PORT --access-logfile $LOG_FILE --error-logfile $LOG_FILE --pid $PID_FILE app:app
 ExecReload=/bin/kill -s HUP \$MAINPID
 Restart=on-failure
 RestartSec=5
+
+# Security hardening
 NoNewPrivileges=true
 PrivateTmp=true
 
@@ -160,16 +149,18 @@ EOF
 
     systemctl daemon-reload
     systemctl enable "$APP_NAME.service"
-    
-    log_info "✓ Service создан: $APP_NAME.service"
+
+    log_info "✓ Service создан: $SYSTEMD_SERVICE"
 }
 
 start_service() {
     log_step "Запуск приложения..."
-    
+
+    systemctl stop "$APP_NAME.service" 2>/dev/null || true
+    sleep 1
     systemctl start "$APP_NAME.service"
     sleep 3
-    
+
     if systemctl is-active --quiet "$APP_NAME.service"; then
         log_info "✓ Приложение запущено"
     else
@@ -180,23 +171,25 @@ start_service() {
 }
 
 show_info() {
+    local IP=$(hostname -I | awk '{print $1}')
+
     echo ""
     echo "═══════════════════════════════════════════════════════"
-    echo -e "  ${GREEN}✓ Установка завершена успешно!${NC}"
+    echo -e "  ${GREEN}✓ Развертывание завершено успешно!${NC}"
     echo "═══════════════════════════════════════════════════════"
     echo ""
     echo "📌 Информация:"
-    echo "  Версия: 1.0.1"
-    echo "  Порт: $PORT"
+    echo "  Приложение: $APP_NAME"
     echo "  Директория: $APP_DIR"
+    echo "  Порт: $PORT"
     echo ""
     echo "🌐 Доступ к приложению:"
-    echo "  http://$(hostname -I | awk '{print $1}'):$PORT"
+    echo "  http://$IP:$PORT"
     echo "  http://localhost:$PORT"
     echo ""
     echo "🔐 Админ-панель:"
     echo "  URL: /admin/login"
-    echo "  Логин: admin"
+    echo "  Логин: $ADMIN_USERNAME"
     echo "  Пароль: $ADMIN_PASSWORD"
     echo ""
     echo "📝 Команды управления:"
@@ -207,17 +200,18 @@ show_info() {
     echo ""
     echo "📁 Структура:"
     echo "  $APP_DIR"
-    echo "  ├── app.py              # Приложение"
-    echo "  ├── models.py           # Модели"
-    echo "  ├── database.py         # БД"
+    echo "  ├── app.py              # Приложение Flask"
+    echo "  ├── models.py           # Модели ORM"
+    echo "  ├── database.py         # Инициализация БД"
     echo "  ├── config.py           # Конфигурация"
-    echo "  ├── gems.db             # База данных"
-    echo "  ├── templates/          # Шаблоны"
-    echo "  ├── static/             # CSS, JS"
-    echo "  ├── uploads/            # Загрузки"
-    echo "  ├── logs/               # Логи"
+    echo "  ├── requirements.txt    # Зависимости"
+    echo "  ├── gems.db             # База данных SQLite"
+    echo "  ├── templates/          # Jinja2 шаблоны"
+    echo "  ├── static/             # CSS, JS, изображения"
+    echo "  ├── uploads/            # Загруженные файлы"
+    echo "  ├── logs/               # Логи приложения"
     echo "  ├── backups/            # Бэкапы"
-    echo "  └── venv/               # Virtualenv"
+    echo "  └── venv/               # Python virtualenv"
     echo ""
     echo "═══════════════════════════════════════════════════════"
 }
@@ -226,16 +220,13 @@ show_info() {
 main() {
     echo ""
     echo "═══════════════════════════════════════════════════════"
-    echo "  Энциклопедия камней — Установка"
-    echo "  Версия: 1.0.0-beta"
+    echo "  Gems Encyclopedia App — Развертывание из файлов"
     echo "═══════════════════════════════════════════════════════"
     echo ""
-    
+
     check_root
-    check_archive "$1"
-    create_user
+    check_app_dir
     create_dirs
-    extract_archive
     setup_venv
     init_database
     create_systemd_service
