@@ -5,9 +5,17 @@
     <h2>Управление записями</h2>
     <div>
         <a href="{{ url_for('admin_create') }}" class="btn btn-primary">+ Добавить камень</a>
+        <a href="{{ url_for('admin_settings') }}" class="btn btn-settings">⚙ Настройки</a>
         <a href="{{ url_for('admin_logout') }}" class="btn btn-secondary">Выйти</a>
     </div>
 </div>
+
+{% if debug_search_enabled %}
+<div class="debug-banner">
+    🔍 <strong>Отладка поиска включена</strong> | 
+    <a href="{{ url_for('debug_search') }}" target="_blank">Открыть страницу отладки</a>
+</div>
+{% endif %}
 
 <table class="admin-table">
     <thead>

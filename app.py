@@ -170,7 +170,23 @@ def admin_logout():
 @admin_required
 def admin_dashboard():
     gems = Gem.query.order_by(Gem.name).all()
-    return render_template('admin_dashboard.html', gems=gems)
+    debug_search_enabled = app.config.get('DEBUG_SEARCH', False)
+    return render_template('admin_dashboard.html', gems=gems, debug_search_enabled=debug_search_enabled)
+
+@app.route('/admin/settings', methods=['GET', 'POST'])
+@admin_required
+def admin_settings():
+    """Настройки админ-панели"""
+    if request.method == 'POST':
+        # Сохранение настроек в сессии (для текущей сессии)
+        debug_search = request.form.get('debug_search') == 'on'
+        session['debug_search_enabled'] = debug_search
+        app.config['DEBUG_SEARCH'] = debug_search
+        flash('Настройки сохранены', 'success')
+        return redirect(url_for('admin_settings'))
+    
+    debug_search_enabled = session.get('debug_search_enabled', app.config.get('DEBUG_SEARCH', False))
+    return render_template('admin_settings.html', debug_search_enabled=debug_search_enabled)
 
 @app.route('/admin/create', methods=['GET', 'POST'])
 @admin_required

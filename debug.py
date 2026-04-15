@@ -13,6 +13,12 @@ debug_bp = Blueprint('debug', __name__, url_prefix='/debug')
 @debug_bp.route('/search')
 def debug_search():
     """Отладочная страница для тестирования поиска"""
+    # Проверка включённой отладки поиска (через сессию или config)
+    from flask import current_app, abort, session
+    debug_enabled = session.get('debug_search_enabled', False) or current_app.config.get('DEBUG_SEARCH', False)
+    if not debug_enabled:
+        abort(403, description='Отладка поиска отключена. Включите в админ-панели.')
+    
     query = request.args.get('q', '').strip()
     results = []
     sql_query = ''

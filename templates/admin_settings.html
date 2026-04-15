@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Настройки админ-панели{% endblock %}
+{% block content %}
+<div class="admin-header">
+    <h2>Настройки</h2>
+    <a href="{{ url_for('admin_dashboard') }}" class="btn btn-secondary">← Назад к записям</a>
+</div>
+
+<div class="settings-section">
+    <h3>🔍 Отладка поиска</h3>
+    <p class="settings-description">
+        Включите эту опцию для доступа к странице отладки поиска (/debug/search).
+        На странице отладки можно проверять работу поискового запроса, видеть SQL и сниппеты.
+    </p>
+    
+    <form method="POST" action="{{ url_for('admin_settings') }}" class="settings-form">
+        <div class="form-group">
+            <label class="checkbox-label">
+                <input type="checkbox" name="debug_search" {% if debug_search_enabled %}checked{% endif %}>
+                <span class="checkbox-text">
+                    <strong>Включить отладку поиска</strong>
+                </span>
+            </label>
+            <p class="help-text">
+                При включении становится доступной страница <code>/debug/search?q=запрос</code>
+                с подробной информацией о работе поиска (SQL-запрос, сниппеты, результаты).
+            </p>
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Сохранить настройки</button>
+    </form>
+</div>
+
+<div class="settings-section">
+    <h3>ℹ️ Информация</h3>
+    <ul class="settings-info">
+        <li><strong>Режим Flask DEBUG:</strong> {{ 'Включён' if config.DEBUG else 'Выключен' }}</li>
+        <li><strong>Отладка поиска:</strong> {{ 'Включена' if debug_search_enabled else 'Выключена' }}</li>
+    </ul>
+</div>
+{% endblock %}

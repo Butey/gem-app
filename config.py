@@ -4,7 +4,8 @@ from datetime import timedelta
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
 class Config:
-    DEBUG = True  # Включено для отладки поиска
+    DEBUG = True  # Режим отладки Flask
+    DEBUG_SEARCH = False  # Отладка поиска (включается в админ-панели)
     SECRET_KEY = os.environ.get('SECRET_KEY', 'dev-key-change-in-prod')
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'gems.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
